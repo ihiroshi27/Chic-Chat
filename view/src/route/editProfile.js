@@ -72,7 +72,7 @@ class EditProfile extends React.Component {
 						<div className="body">
 							<div className="profile">
 								<div className="profile-img" ref={ div => { this.profile = div } }>
-									<img src={ API_URL + '/static/' + this.state.user.profile } />
+									<img src={ API_URL + '/static/' + this.state.user.profile } alt="Profile" />
 								</div>
 								<button onClick={ () => this.file.click() } className="button grey-outset">Choose Image</button>
 							</div>
