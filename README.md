@@ -10,7 +10,7 @@
 
 - `npm install` at the root directory and view directory
 
-## Runing
+## Running
 - `npm start` at the root directory and view directory
 
 **Back-end** will run on port **8080** and **Front-end** will run on port **3000**
