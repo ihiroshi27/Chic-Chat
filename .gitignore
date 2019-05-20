@@ -1,0 +1,5 @@
+node_modules
+build
+uploads
+
+.DS_STORE

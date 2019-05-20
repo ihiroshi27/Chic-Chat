@@ -1,0 +1,19 @@
+.section > .title {
+	font-family: 'Prompt', sans-serif;
+	font-size: 1.5em;
+	line-height: 2;
+	color: #ee5253;
+	border-bottom: 1px solid #dddddd;
+	margin-bottom: 10px;
+}
+.section > .title > a {
+	color: #ee5253;
+}
+.section > .subtitle {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.8em;
+	font-weight: lighter;
+	color: #949494;
+	padding: 0px 5px;
+	margin-bottom: 10px;
+}

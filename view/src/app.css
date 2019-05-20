@@ -1,0 +1,11 @@
+#container {
+	position: relative;
+	width: 100%;
+	height: calc(100% - 100px);
+	padding: 20px 0px;
+	box-sizing: border-box;
+}
+.wrapper {
+	width: 970px;
+	margin: auto;
+}

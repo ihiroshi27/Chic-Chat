@@ -1,0 +1,72 @@
+#chat-list {
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: #ececec;
+	padding: 20px;
+	box-sizing: border-box;
+}
+#chat-list > .chat {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	margin: 10px 0px;
+}
+#chat-list > .chat.friend {
+	margin-left: auto;
+	justify-content: flex-start;
+}
+#chat-list > .chat > .profile {
+	text-align: center;
+	width: 70px;
+}
+#chat-list > .chat > .profile > .profile-img-wrapper {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	border-radius: 100%;
+	border: 1px solid #dddddd;
+}
+#chat-list > .chat > .profile > .profile-img-wrapper > img {
+	position: relative;
+	left: 50%;
+	width: auto;
+	height: 100%;
+	transform: translateX(-50%);
+}
+#chat-list > .chat > .profile > .timestamp {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.5em;
+	line-height: 1;
+	padding: 5px 0px;
+	color: #6d6d6d;
+}
+#chat-list > .chat > .message {
+	position: relative;
+	font-family: 'Prompt', sans-serif;
+	font-size: 1em;
+	padding: 10px 50px;
+	color: #fff;
+	background-color: #ee5253;
+	border-radius: 10px;
+	margin: 0px 5px;
+	box-sizing: border-box;
+}
+#chat-list > .chat.friend > .message {
+	color: #333333;
+	background-color: #ffffff;
+}
+#chat-list > .chat > .message > i {
+	position: absolute;
+	top: 10px;
+	right: -8px;
+	color: #ee5253;
+	font-size: 30px;
+	line-height: 1;
+}
+#chat-list > .chat.friend > .message > i {
+	left: -8px;
+	right: auto;
+	color: #fff;
+}

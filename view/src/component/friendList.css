@@ -1,0 +1,81 @@
+#friend-list > .friend {
+	padding: 15px 20px;
+	background-color: #fff;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
+	border-radius: 4px;
+	border-left: 4px solid #ee5253;
+	border-right: 4px solid #ee5253;
+}
+#friend-list > .friend:last-of-type {
+	margin-bottom: 0px;
+}
+#friend-list > .friend::after {
+	display: block;
+	content: '';
+	clear: both;
+}
+#friend-list > .friend > .friend-img-wrapper {
+	float: left;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	border-radius: 100px;
+	margin-right: 20px;
+	border: 1px solid #dddddd;
+	box-sizing: border-box;
+	background-color: #dddddd;
+}
+#friend-list > .friend > .friend-img-wrapper > .friend-img {
+	position: relative;
+	left: 50%;
+	width: auto;
+	height: 100%;
+	transform: translateX(-50%);
+}
+#friend-list > .friend > .friend-profile {
+	float: left;
+	font-family: 'Prompt', sans-serif;
+	padding: 25px 0px;
+}
+#friend-list > .friend > .friend-profile > .friend-profile-name {
+	font-size: 1em;
+	color: #ee5253;
+}
+#friend-list > .friend > .friend-profile > .friend-profile-username {
+	font-size: 0.8em;
+	font-weight: lighter;
+	color: #949494;
+}
+#friend-list > .friend > .friend-option {
+	float: right;
+	margin-top: 30px;
+}
+#friend-list > .friend > .friend-option > button {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.9em;
+	padding: 5px 10px;
+	outline: none;
+	color: #a5a5a5;
+	border: none;
+	transition: color 0.5s;
+	background: transparent;
+}
+#friend-list > .friend > .friend-option > button:hover {
+	cursor: pointer;
+	color: #ee5253;
+}
+#friend-list > .friend > .friend-option > button:last-of-type {
+	border-right: 0px;
+}
+#friend-list > .message {
+	font-family: 'Prompt', sans-serif;
+	font-size: 1em;
+	text-align: center;
+	padding: 40px 20px;
+	background-color: #fff;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
+	border-radius: 10px;
+	color: #818181;
+}

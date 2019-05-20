@@ -1,0 +1,96 @@
+#header {
+	width: 100%;
+	height: 40px;
+	padding: 10px 0px;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+}
+#header > .wrapper {
+	position: relative;
+}
+#header > .wrapper::after {
+	display: block;
+	content: '';
+	clear: both;
+}
+#header > .wrapper > .search {
+	float: left;
+}
+#header > .wrapper > .search > form > .input-button {
+	width: 500px;
+}
+#header > .wrapper > .profile {
+	float: right;
+}
+#header > .wrapper > .profile > .profile-name {
+	float: left;
+	padding: 0px 10px;
+	font-family: 'Prompt', sans-serif;
+	font-size: 1em;
+	line-height: 2.5;
+	color: #363636;
+}
+#header > .wrapper > .profile > .profile-img-wrapper {
+	float: left;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	border-radius: 40px;
+	border: 1px solid #dddddd;
+	box-sizing: border-box;
+	background-color: #dddddd;
+}
+#header > .wrapper > .profile > .profile-img-wrapper > .profile-img {
+	position: relative;
+	left: 50%;
+	width: auto;
+	height: 100%;
+	transform: translateX(-50%);
+}
+#header > .wrapper > .profile > .profile-button {
+	font-size: 16px;
+	line-height: 2.5;
+	color: #363636;
+	padding: 0px 5px;
+	border: none;
+	background: transparent;
+	outline: none;
+}
+#header > .wrapper > .profile > .profile-button:hover {
+	cursor: pointer;
+}
+#header > .wrapper > .profile-option {
+	position: absolute;
+	right: 0px;
+	top: 60px;
+	background-color: #ffffff;
+	border-radius: 10px;
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+	padding: 0px 15px;
+	z-index: 1;
+	box-sizing: border-box;
+}
+#header > .wrapper > .profile-option > a,
+#header > .wrapper > .profile-option > button {
+	display: block;
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.8em;
+	width: 120px;
+	padding: 10px 0px;
+	text-decoration: none;
+	color: #363636;
+	border: none;
+	text-align: left;
+	background: transparent;
+	border-bottom: 1px solid #dddddd;
+	outline: none;
+}
+#header > .wrapper > .profile-option > a:last-child,
+#header > .wrapper > .profile-option > button:last-child {
+	border-bottom: 0px;
+}
+#header > .wrapper > .profile-option > a:hover,
+#header > .wrapper > .profile-option > button:hover {
+	cursor: pointer;
+	color: #ee5253;
+}

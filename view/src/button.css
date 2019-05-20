@@ -1,0 +1,41 @@
+.button {
+	font-family: 'Prompt', sans-serif;
+	font-size: 1em;
+	padding: 5px 20px;
+	border-radius: 20px;
+	margin-right: 10px;
+	margin-top: 10px;
+	outline: none;
+	border: 2px solid transparent;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+.button:hover {
+	cursor: pointer;
+}
+.button.full {
+	width: 100%;
+}
+.button.green {
+	color: #ffffff;
+	background-color: #6ab04c;
+}
+.button.green-outset {
+	color: #6ab04c;
+	border: 2px solid #6ab04c;
+	background: transparent;
+	text-shadow: none;
+}
+.button.grey {
+	color: #ffffff;
+	background-color: #6d6d6d;
+}
+.button.grey-outset {
+	color: #6d6d6d;
+	border: 2px solid #dddddd;
+	background: transparent;
+	text-shadow: none;
+}
+.button.red {
+	color: #ffffff;
+	background-color: #ee5253;
+}

@@ -1,0 +1,85 @@
+#home {
+	height: 100%;
+}
+#home > .friend-wrapper {
+	float: left;
+	width: 30%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding-right: 10px;
+	box-sizing: border-box;
+}
+#home > .chat-wrapper {
+	float: left;
+	width: 70%;
+	height: 100%;
+	background-color: #fff;
+	box-sizing: border-box;
+	overflow: hidden;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+#home > .chat-wrapper > .header {
+	font-family: 'Prompt', sans-serif;
+	font-size: 1em;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	background-color: #ee5253;
+	padding: 0px 20px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #dddddd;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	border-bottom: 2px solid #ca3839;
+}
+#home > .chat-wrapper > .header > .typing {
+	font-weight: lighter;
+	opacity: 0.7;
+}
+#home > .chat-wrapper > #chat-list {
+	height: calc(100% - 120px);
+}
+
+.chat-wrapper > .send-box {
+	position: relative;
+	width: 100%;
+	height: 70px;
+	box-sizing: border-box;
+	border-top: 1px solid #dddddd;
+}
+.chat-wrapper > .send-box > form {
+	height: 100%;
+}
+.chat-wrapper > .send-box > form > input {
+	font-family: 'Prompt', sans-serif;
+	font-size: 1em;
+	display: block;
+	appearance: none;
+	width: 100%;
+	height: 100%;
+	padding-left: 20px;
+	padding-right: 60px;
+	border: none;
+	background: transparent;
+	box-sizing: border-box;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	outline: none;
+}
+.chat-wrapper > .send-box > form > input:disabled {
+	background-color: #e7e7e7;
+}
+.chat-wrapper > .send-box > form > button {
+	position: absolute;
+	top: 25px;
+	right: 20px;
+	font-size: 20px;
+	padding: 0px;
+	border: none;
+	background: transparent;
+}
+.chat-wrapper > .send-box > form > button:hover {
+	cursor: pointer;
+	color: #ee5253;
+}

@@ -1,0 +1,52 @@
+#edit-profile > .section > .body {
+	box-sizing: border-box;
+	background-color: #f7f7f7;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	border-bottom: 4px solid #ee5253;
+}
+#edit-profile > .section > .body::after {
+	display: block;
+	content: '';
+	clear: both;
+}
+#edit-profile > .section > .body > .profile {
+	width: 30%;
+	text-align: center;
+	padding: 20px;
+}
+#edit-profile > .section > .body > .profile > .profile-img {
+	width: 150px;
+	height: 150px;
+	border: 2px solid #dddddd;
+	background-color: #ee5253;
+	border-radius: 100%;
+	text-align: center;
+	color: #ffffff;
+	overflow: hidden;
+	margin: auto;
+}
+#edit-profile > .section > .body > .profile > .profile-img > img {
+	position: relative;
+	left: 50%;
+	width: auto;
+	height: 100%;
+	transform: translateX(-50%);
+}
+#edit-profile > .section > .body > .profile > .profile-img > i {
+	font-size: 130px;
+	line-height: 1.5;
+}
+#edit-profile > .section > .body > .profile > .button {
+	display: inline-block;
+	margin-top: 20px;
+}
+#edit-profile > .section > .body > .form {
+	width: 70%;
+	background-color: #fff;
+	padding: 30px;
+}

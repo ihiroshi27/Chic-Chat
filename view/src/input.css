@@ -1,0 +1,50 @@
+.input-icon,
+.input-button {
+	transition: opacity 0.5s;
+	opacity: 0.8;
+	overflow: hidden;
+	border: 1px solid #dddddd;
+	border-radius: 10px;
+	box-sizing: border-box;
+	margin-bottom: 5px;
+}
+.input-icon:focus-within,
+.input-button:focus-within {
+	opacity: 1;
+}
+.input-icon > input,
+.input-button > input {
+	appearance: none;
+	font-size: 0.9em;
+	font-family: 'Prompt', sans-serif;
+	height: 40px;
+	border: none;
+	background: #f5f5f5;
+	outline: none;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: calc(100% - 40px);
+	padding: 0px 15px;
+}
+.input-icon > i,
+.input-button > button {
+	width: 40px;
+	height: 40px;
+	padding: 0px;
+	font-size: 20px;
+	outline: none;
+	border: none;
+	box-sizing: border-box;
+	background-color: #e6e6e6;
+}
+.input-icon > i {
+	text-align: center;
+	line-height: 2;
+	border-right: 1px solid #dddddd;
+}
+.input-button > button {
+	border-left: 1px solid #dddddd;
+}
+.input-button > button:hover {
+	cursor: pointer;
+}
