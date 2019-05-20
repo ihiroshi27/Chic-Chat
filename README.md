@@ -1,6 +1,10 @@
 ## Installation
 - Install NodeJS and MySQL Server
 - Config MySQL Server in config.js
+- Create Database
+
+`CREATE DATABASE chic_chat;`
+
 - Create Table
 
 1. `CREATE TABLE user (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, username varchar(255) NOT NULL UNIQUE, password text NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL UNIQUE, mobile varchar(10) NOT NULL UNIQUE, citizen_id varchar(13) NOT NULL UNIQUE, profile varchar(255) NOT NULL, mimetype varchar(128));`
