@@ -1,7 +1,9 @@
 #container {
 	position: relative;
 	width: 100%;
-	height: calc(100% - 100px);
+	height: 1px;
+	min-height: calc(100% - 100px);
+	overflow: auto;
 	padding: 20px 0px;
 	box-sizing: border-box;
 }
