@@ -47,24 +47,24 @@ class FriendList extends React.Component {
 	render() {
 		return (
 			<div id="friend-list">
-				<div className="message" hidden={ this.props.users.length > 0 }><i className="fas fa-info-circle"></i> Not Found</div>
+				<div className="message" hidden={ this.props.friends.length > 0 }><i className="fas fa-info-circle"></i> Not Found</div>
 				{
-					this.props.users.map((user, index) => {
+					this.props.friends.map((friend, index) => {
 						return (
 							<div className="friend" key={ index }>
 								<div className="friend-img-wrapper">
-									<img className="friend-img" src={ API_URL + "/static/" + user.profile } alt={ user.name } />
+									<img className="friend-img" src={ API_URL + "/static/" + friend.profile } alt={ friend.name } />
 								</div>
 								<div className="friend-profile">
-									<div className="friend-profile-name">{ user.name }</div>
-									<div className="friend-profile-username"><i className="fas fa-user-tag"></i> { user.username }</div>
+									<div className="friend-profile-name">{ friend.name }</div>
+									<div className="friend-profile-username"><i className="fas fa-user-tag"></i> { friend.username }</div>
 								</div>
 								<div className="friend-option">
 									{ 
-										user.friended === "NO" ?
-											<button onClick={ () => this.onAddFriend(user.id) }><i className="fas fa-user-plus"></i> Add Friend</button>
+										friend.friended === "NO" ?
+											<button onClick={ () => this.onAddFriend(friend.id) }><i className="fas fa-user-plus"></i> Add Friend</button>
 										:
-										<button onClick={ () => this.onUnfriend(user.id) }><i className="fas fa-user-times"></i> Unfriend</button>
+										<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Unfriend</button>
 									}
 								</div>
 							</div>

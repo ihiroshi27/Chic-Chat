@@ -9,14 +9,14 @@ class Search extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fetched: false,
-			users: []
+			friends_fetched: false,
+			friends: []
 		}
 	}
 	componentWillMount() {
-		this.fetchUser();
+		this.fetchFriend();
 	}
-	fetchUser = () => {
+	fetchFriend = () => {
 		fetch(API_URL + "/search?q=" + new URLSearchParams(this.props.location.search).get("q"), {
 			method: 'GET',
 			headers: {
@@ -26,8 +26,8 @@ class Search extends React.Component {
 		.then(response => response.json().then(body => ({ status: response.status, body: body })))
 		.then(response => {
 			this.setState({ 
-				fetched: true,
-				users: response.body.users
+				friends_fetched: true,
+				friends: response.body.friends
 			});
 		});
 	}
@@ -37,12 +37,12 @@ class Search extends React.Component {
 				<div className="wrapper">
 					<div className="section">
 						<div className="title"><Link to="/"><i className="fas fa-angle-left"></i></Link> Find Friend</div>
-						<div className="subtitle"><i className="far fa-user"></i> Discovered { this.state.users.length } friends for { new URLSearchParams(this.props.location.search).get("q") }</div>
+						<div className="subtitle"><i className="far fa-user"></i> Discovered { this.state.friends.length } friends for { new URLSearchParams(this.props.location.search).get("q") }</div>
 						<div className="body">
 							<div className="friend-list">
 							{
-								!this.state.fetched ? null :
-									<FriendList users={ this.state.users } refetch={ this.fetchUser } />
+								!this.state.friends_fetched ? null :
+									<FriendList friends={ this.state.friends } refetch={ this.fetchFriend } />
 							}
 							</div>
 						</div>

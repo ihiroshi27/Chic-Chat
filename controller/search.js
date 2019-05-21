@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 		user.find(payload.id, query)
 		.then((rows) => {
 			res.json({ 
-				users: rows.map(function(row) {
+				friends: rows.map(function(row) {
 					return { 
 						id: row.id,
 						username: row.username,
