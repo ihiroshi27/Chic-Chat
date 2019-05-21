@@ -5,6 +5,12 @@ import './editProfile.css';
 const API_URL = process.env.REACT_APP_API_URL;
 
 class EditProfile extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isSubmitFormComplete: true
+		}
+	}
 	onProfileChange = (event) => {
 		if (event.target.value === "") {
 			let profile = new Image();
@@ -22,6 +28,8 @@ class EditProfile extends React.Component {
 		event.preventDefault();
 		let target = event.target;
 		let formData = new FormData(target);
+		this.setState({ isSubmitFormComplete: false });
+
 		fetch(API_URL + '/user', {
 			method: 'PUT',
 			headers: {
@@ -34,8 +42,9 @@ class EditProfile extends React.Component {
 			if (response.status !== 200) {
 				alert(response.body.error);
 			} else {
-				alert('Complete');
+				window.location.reload();
 			}
+			this.setState({ isSubmitFormComplete: true });
 		});
 	}
 	render() {
@@ -76,6 +85,7 @@ class EditProfile extends React.Component {
 						</div>
 					</div>
 				</div>
+				<div className="loading-overlay" hidden={ this.state.isSubmitFormComplete }><div className="loading"><div></div><div></div></div></div>
 			</div>
 		)
 	}

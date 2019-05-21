@@ -4,9 +4,17 @@ import './register.css';
 const API_URL = process.env.REACT_APP_API_URL;
 
 class Register extends React.Component {
-	onSubmit(event) {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isSubmitFormComplete: true
+		}
+	}
+	onSubmit = (event) => {
 		event.preventDefault();
 		let target = event.target;
+		this.setState({ isSubmitFormComplete: false });
+
 		let file = target.file.value;
 		if (file === "") {
 			alert("Please upload an image");
@@ -30,6 +38,7 @@ class Register extends React.Component {
 						localStorage.setItem("token", response.body.token);
 						window.location.href = '/';
 					}
+					this.setState({ isSubmitFormComplete: true });
 				});
 			}
 		}
@@ -96,6 +105,7 @@ class Register extends React.Component {
 						</div>
 					</div>
 				</div>
+				<div className="loading-overlay" hidden={ this.state.isSubmitFormComplete }><div className="loading"><div></div><div></div></div></div>
 			</div>
 		)
 	}

@@ -5,12 +5,18 @@ import './login.css';
 const API_URL = process.env.REACT_APP_API_URL;
 
 class Login extends React.Component {
-	onSubmit(event) {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isSubmitFormComplete: true
+		}
+	}
+	onSubmit = (event) => {
 		event.preventDefault();
+		this.setState({ isSubmitFormComplete: false });
 
 		let username = event.target.username.value;
 		let password = event.target.password.value;
-
 		fetch(API_URL + '/authentication', {
 			method: 'POST',
 			headers: {
@@ -29,6 +35,7 @@ class Login extends React.Component {
 				localStorage.setItem("token", response.body.token);
 				window.location.reload();
 			}
+			this.setState({ isSubmitFormComplete: true });
 		});
 	}
 	render() {
@@ -55,6 +62,7 @@ class Login extends React.Component {
 						</div>
 					</div>
 				</div>
+				<div className="loading-overlay" hidden={ this.state.isSubmitFormComplete }><div className="loading"><div></div><div></div></div></div>
 			</div>
 		)
 	}
