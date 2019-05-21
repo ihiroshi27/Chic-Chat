@@ -124,38 +124,48 @@ class Home extends React.Component {
 		});
 	}
 	render () {
-		return (
-			<div id="container">
-				<div id="home" className="wrapper">
-					<div className="friend-wrapper">
-						<FriendSelector 
-							friends={ this.state.friends }
-							friend={ this.state.friend }
-							onChange={ this.onChangeFriend }
-							refetch={ this.fetchFriend }
-						/>
+		if (!this.state.friends_fetched) {
+			return (
+				<div id="container">
+					<div id="home" className="wrapper">
+						<div className="loading"><div></div><div></div></div>
 					</div>
-					<div className="chat-wrapper">
-						<div className="header">{ this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
-						<ChatList user={ this.props.user } friend={ this.state.friend } chat={ this.state.chat } />
-						<div className="send-box">
-							<form onSubmit={ this.onSendMessage }>
-								<input 
-									name="message"
-									type="text"
-									placeholder="Type a message"
-									autoComplete="off"
-									onKeyUp={ this.onMessageKeyUp }
-									disabled={ this.state.friends.length === 0 }
-									required
-								/>
-								<button type="submit" title="Send"><i className="fas fa-paper-plane"></i></button>
-							</form>
+				</div>
+			)
+		} else {
+			return (
+				<div id="container">
+					<div id="home" className="wrapper">
+						<div className="friend-wrapper">
+							<FriendSelector 
+								friends={ this.state.friends }
+								friend={ this.state.friend }
+								onChange={ this.onChangeFriend }
+								refetch={ this.fetchFriend }
+							/>
+						</div>
+						<div className="chat-wrapper">
+							<div className="header">{ this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
+							<ChatList user={ this.props.user } friend={ this.state.friend } chat={ this.state.chat } />
+							<div className="send-box">
+								<form onSubmit={ this.onSendMessage }>
+									<input 
+										name="message"
+										type="text"
+										placeholder="Type a message"
+										autoComplete="off"
+										onKeyUp={ this.onMessageKeyUp }
+										disabled={ this.state.friends.length === 0 }
+										required
+									/>
+									<button type="submit" title="Send"><i className="fas fa-paper-plane"></i></button>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		)
+			)
+		}
 	}
 }
 
