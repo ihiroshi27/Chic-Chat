@@ -38,7 +38,13 @@ router.post('/', upload.single('file'), function(req, res, next) {
 	let mimetype = req.file.mimetype;
 
 	user.create(username, password, name, email, mobile, citizenID, profile, mimetype)
-	.then((results) => res.json({ token: token.encode({ id: results.insertId }, password) }))
+	.then((results) => {
+		token.encode({ id: results.insertId }, password)
+		.then((token) => {
+			res.json({ token: token });
+		})
+		.catch((err) => next(err));
+	})
 	.catch((err) => next(err));
 });
 
