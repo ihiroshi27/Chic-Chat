@@ -57,7 +57,7 @@ class App extends React.Component {
 		} else {
 			if (!this.state.user_fetched) {
 				return (
-					<div class="loading"><div></div><div></div></div>
+					<div className="loading"><div></div><div></div></div>
 				)
 			} else {
 				return (
