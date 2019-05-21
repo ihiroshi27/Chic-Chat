@@ -39,6 +39,7 @@ class Home extends React.Component {
 					friends_fetched: true,
 					friends: [],
 					friend: {},
+					chat_fetched: true,
 					chat: []
 				});
 			} else {
