@@ -16,9 +16,11 @@ router.post('/', function(req, res, next) {
 		} else if (!bcrypt.compareSync(password, rows[0].password)) {
 			next(new Error("Incorrect Password"))
 		} else {
-			res.json({ 
-				token: token.encode({ id: rows[0].id })
-			});
+			token.encode({ id: rows[0].id }, rows[0].password)
+			.then((token) => {
+				res.json({ token: token });
+			})
+			.catch((err) => next(err));
 		}
 	});
 });
