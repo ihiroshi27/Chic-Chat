@@ -80,8 +80,12 @@ class Home extends React.Component {
 		socket.on('new', () => { this.fetchChat(friendID); });
 		socket.on('typing', (typing) => { this.setState({ typing: typing }); });
 	}
-	onChangeFriend = (friend) => {
-		this.setState({ friend: friend }, () => {
+	onFriendChange = (friend) => {
+		this.setState({ 
+			friend: friend,
+			chat_fetched: false,
+			chat: []
+		}, () => {
 			this.fetchChat(this.state.friend.id);
 			this.setListener(this.state.friend.id);
 		});
@@ -140,13 +144,13 @@ class Home extends React.Component {
 							<FriendSelector 
 								friends={ this.state.friends }
 								friend={ this.state.friend }
-								onChange={ this.onChangeFriend }
+								onChange={ this.onFriendChange }
 								refetch={ this.fetchFriend }
 							/>
 						</div>
 						<div className="chat-wrapper">
 							<div className="header">{ this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
-							<ChatList user={ this.props.user } friend={ this.state.friend } chat={ this.state.chat } />
+							<ChatList user={ this.props.user } friend={ this.state.friend } chat_fetched={ this.state.chat_fetched } chat={ this.state.chat } />
 							<div className="send-box">
 								<form onSubmit={ this.onSendMessage }>
 									<input 
