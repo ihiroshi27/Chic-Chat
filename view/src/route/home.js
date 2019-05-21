@@ -14,8 +14,6 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			user_fetched: false,
-			user: this.props.user,
 			friends_fetched: false,
 			friends: [],
 			friend: {},
@@ -25,24 +23,7 @@ class Home extends React.Component {
 		}
 	}
 	componentWillMount() {
-		this.fetchUser();
-	}
-	fetchUser() {
-		fetch(API_URL + '/user', {
-			method: 'GET',
-			headers: {
-				'Authorization': "Bearer " + localStorage.getItem("token")
-			}
-		})
-		.then(response => response.json().then(body => ({ status: response.status, body: body })))
-		.then(response => {
-			this.setState({
-				user_fetched: true,
-				user: response.body.user
-			}, () => {
-				this.fetchFriend();
-			});
-		});
+		this.fetchFriend();
 	}
 	fetchFriend = () => {
 		fetch(API_URL + "/friend", {
@@ -93,7 +74,7 @@ class Home extends React.Component {
 	setListener = (friendID) => {
 		socket = io(API_URL);
 		socket.emit('info', {
-			userID: this.state.user.id,
+			userID: this.props.user.id,
 			friendID: friendID
 		});
 		socket.on('new', () => { this.fetchChat(friendID); });
@@ -108,14 +89,14 @@ class Home extends React.Component {
 	onMessageKeyUp = (event) => {
 		socket.emit('typing', { 
 			typing: true, 
-			userID: this.state.user.id,
+			userID: this.props.user.id,
 			friendID: this.state.friend.id 
 		});
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
 			socket.emit('typing', {
 				typing: false,
-				userID: this.state.user.id,
+				userID: this.props.user.id,
 				friendID: this.state.friend.id
 			});
 		}, 2000);
@@ -156,7 +137,7 @@ class Home extends React.Component {
 					</div>
 					<div className="chat-wrapper">
 						<div className="header">{ this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
-						<ChatList user={ this.state.user } friend={ this.state.friend } chat={ this.state.chat } />
+						<ChatList user={ this.props.user } friend={ this.state.friend } chat={ this.state.chat } />
 						<div className="send-box">
 							<form onSubmit={ this.onSendMessage }>
 								<input 
