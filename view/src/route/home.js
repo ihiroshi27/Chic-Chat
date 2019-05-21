@@ -159,7 +159,7 @@ class Home extends React.Component {
 										placeholder="Type a message"
 										autoComplete="off"
 										onKeyUp={ this.onMessageKeyUp }
-										disabled={ this.state.friends.length === 0 }
+										disabled={ !this.state.chat_fetched || (this.state.friends.length === 0) }
 										required
 									/>
 									<button type="submit" title="Send"><i className="fas fa-paper-plane"></i></button>
