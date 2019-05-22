@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './register.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -69,6 +70,7 @@ class Register extends React.Component {
 								<button onClick={ () => this.file.click() } className="button grey-outset">Choose Image</button>
 							</div>
 							<div className="form">
+								<div className="title"><Link to="/"><i className="fas fa-angle-left"></i></Link> Create an account</div>
 								<form encType="multipart/form-data" onSubmit={ this.onSubmit }>
 									<div className="input-icon">
 										<i className="fas fa-user"></i>
