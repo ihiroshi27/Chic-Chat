@@ -99,7 +99,7 @@ class Register extends React.Component {
 										<input name="citizen_id" type="text" pattern="[0-9]{13}" placeholder="Citizen ID" required />
 									</div>
 									<input onChange={ this.onProfileChange } ref={ input => { this.file = input } } name="file" type="file" style={{ display: 'none' }} />
-									<button className="button full red" type="submit"><i className="fas fa-check-circle"></i> Register</button>
+									<button className="button full red" type="submit"><i className="far fa-check-circle"></i> Register</button>
 								</form>
 							</div>
 						</div>
