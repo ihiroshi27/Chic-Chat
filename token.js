@@ -20,7 +20,7 @@ exports.encode = function(payload, password) {
 		let signature = escapeBase64Url(
 			CryptoJS.HmacSHA256(
 				data,
-				config.app.secret + password
+				config.security.secret + password
 			).toString(CryptoJS.enc.Base64)
 		);
 		resolve(data + '.' + signature);
@@ -44,7 +44,7 @@ exports.decode = function(token) {
 				let signatureCheck = escapeBase64Url(
 					CryptoJS.HmacSHA256(
 						[header, payload].join('.'),
-						config.app.secret + password
+						config.security.secret + password
 					).toString(CryptoJS.enc.Base64)
 				);
 				if (signatureCheck !== signature) {

@@ -1,9 +1,8 @@
 const express = require('express');
 const multer  = require('multer')
-
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
+const config = require('../config');
 const token = require('../token');
 const user = require('../model/user');
 
@@ -29,7 +28,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', upload.single('file'), function(req, res, next) {
 	let username = req.body.username;
-	let password = bcrypt.hashSync(req.body.password, saltRounds);
+	let password = bcrypt.hashSync(req.body.password, config.security.saltRounds);
 	let name = req.body.name;
 	let email = req.body.email;
 	let mobile = req.body.mobile;

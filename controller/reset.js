@@ -1,8 +1,6 @@
 const express = require('express');
 const crypto = require('crypto'); 
-
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 const config = require('../config');
 const mail = require('../mail');
@@ -52,7 +50,7 @@ router.post('/', function(req, res, next) {
 
 router.put("/", function(req, res, next) {
 	let token = req.query.token;
-	let password = bcrypt.hashSync(req.body.password, saltRounds);
+	let password = bcrypt.hashSync(req.body.password, config.security.saltRounds);
 
 	reset.findByToken(token)
 	.then((rows) => {

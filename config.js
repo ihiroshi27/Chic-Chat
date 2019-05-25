@@ -1,11 +1,14 @@
 const config = {
 	app: {
 		hostname: '0.0.0.0',
-		port: 8080,
-		secret: "secret"
+		port: 8080
 	},
 	view: {
 		url: "http://localhost:3000"
+	},
+	security: {
+		secret: "secretkey",
+		saltRounds: 10
 	},
 	recaptcha: {
 		secret: ""
