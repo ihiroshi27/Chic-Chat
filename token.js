@@ -19,8 +19,8 @@ exports.encode = function(payload, password) {
 		].join(".");
 		let signature = escapeBase64Url(
 			CryptoJS.HmacSHA256(
-				[data, password].join('.'),
-				config.app.secret
+				data,
+				config.app.secret + password
 			).toString(CryptoJS.enc.Base64)
 		);
 		resolve(data + '.' + signature);
@@ -43,8 +43,8 @@ exports.decode = function(token) {
 				let password = rows[0].password;
 				let signatureCheck = escapeBase64Url(
 					CryptoJS.HmacSHA256(
-						[header, payload, password].join('.'),
-						config.app.secret
+						[header, payload].join('.'),
+						config.app.secret + password
 					).toString(CryptoJS.enc.Base64)
 				);
 				if (signatureCheck !== signature) {
