@@ -58,6 +58,7 @@ class Login extends React.Component {
 								</div>
 								<button className="button full red" type="submit"><i className="fas fa-sign-in-alt"></i> Sign In</button>
 							</form>
+							<Link className="forgot-password" to="/forgot-password">Forgot your password?</Link>
 							<Link className="register" to="/register">Create an account <i className="fas fa-angle-right"></i></Link>
 						</div>
 					</div>

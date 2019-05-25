@@ -27,6 +27,15 @@ exports.getByUsername = function(username) {
 	});
 }
 
+exports.getByEmail = function(email) {
+	return new Promise(function(resolve, reject) {
+		db.query("SELECT * FROM user WHERE email = '" + email + "'", function(err, rows) {
+			if (err) reject(err);
+			else resolve(rows[0]);
+		});
+	});
+}
+
 exports.updateByID = function(id, update) {
 	return new Promise(function(resolve, reject) {
 		db.query("UPDATE user SET " + update + " WHERE id = '" + id + "'", function(err, rows) {

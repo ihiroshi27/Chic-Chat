@@ -6,6 +6,8 @@ import Login from './route/login';
 import Register from './route/register';
 import Search from './route/search';
 import EditProfile from './route/editProfile';
+import ForgotPassword from './route/forgotPassword';
+import ResetPassword from './route/resetPassword';
 
 import Header from './component/header';
 import Footer from './component/footer';
@@ -51,6 +53,8 @@ class App extends React.Component {
 			return (
 				<BrowserRouter>
 					<Route exact path="/" component={ Login } />
+					<Route exact path="/forgot-password" component={ ForgotPassword } />
+					<Route exact path="/reset-password" component={ ResetPassword } />
 					<Route exact path="/register" component={ Register } />
 				</BrowserRouter>
 			)

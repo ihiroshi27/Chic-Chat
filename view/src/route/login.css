@@ -13,13 +13,6 @@
 	border-radius: 10px;
 	border-bottom: 4px solid #ee5253;
 }
-#login > .section > .body > .register {
-	display: block;
-	color: #5c5c5c;
-	margin-top: 30px;
-	text-decoration: none;
-	text-align: center;
-}
 #login > .section > .body > .profile {
 	width: 100px;
 	height: 100px;
@@ -36,4 +29,30 @@
 #login > .section > .body > .profile > i {
 	font-size: 80px;
 	line-height: 1.5;
+}
+#login > .section > .body > .register {
+	float: right;
+}
+#login > .section > .body > .forgot-password {
+	float: left;
+}
+#login > .section > .body > .register,
+#login > .section > .body > .forgot-password {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.8em;
+	display: block;
+	color: #5c5c5c;
+	text-decoration: none;
+	text-align: center;
+	margin-top: 20px;
+}
+#login > .section > .body > .register:hover,
+#login > .section > .body > .forgot-password:hover {
+	color: #ee5253;
+	text-decoration: underline;
+}
+#login > .section > .body::after {
+	display: block;
+	content: '';
+	clear: both;
 }
