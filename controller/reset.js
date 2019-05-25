@@ -30,7 +30,7 @@ router.post('/', function(req, res, next) {
 			reset.create(user.id, email, resetToken)
 			.then((results) => {
 				var mailOptions = {
-					from: config.email.auth.user,
+					from: config.mail.auth.user,
 					to: email,
 					subject: 'Reset your Chic-Chat password',
 					html: '<p style="font-family: Arial, Helvetica, sans-serif;font-size: 18px;font-weight: bold;">Hello ' + user.name + '!</p>'

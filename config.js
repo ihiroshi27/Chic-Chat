@@ -12,7 +12,7 @@ const config = {
 		password: "",
 		database: "chic_chat"
 	},
-	email: {
+	mail: {
 		service: '',
 		auth: {
 			user: '',
