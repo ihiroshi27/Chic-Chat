@@ -11,6 +11,7 @@ const chat = require('./controller/chat');
 const resetPassword = require('./controller/reset');
 
 const app = express();
+app.enable('trust proxy');
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
@@ -61,4 +62,4 @@ app.use(function(err, req, res, next) {
 	res.status(500).json({ error: err.message });
 });
 
-server.listen(config.app.port);
+server.listen(config.app.port, config.app.hostname);
