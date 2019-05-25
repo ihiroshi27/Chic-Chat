@@ -29,6 +29,7 @@
 	border: 1px solid #dddddd;
 }
 #chat-list > .chat > .profile > .profile-img-wrapper > img {
+	display: block;
 	position: relative;
 	left: 50%;
 	width: auto;
