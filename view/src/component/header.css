@@ -41,6 +41,7 @@
 	background-color: #dddddd;
 }
 #header > .wrapper > .profile > .profile-img-wrapper > .profile-img {
+	display: block;
 	position: relative;
 	left: 50%;
 	width: auto;

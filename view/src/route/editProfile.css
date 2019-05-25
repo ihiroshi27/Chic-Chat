@@ -31,6 +31,7 @@
 	margin: auto;
 }
 #edit-profile > .section > .body > .profile > .profile-img > img {
+	display: block;
 	position: relative;
 	left: 50%;
 	width: auto;

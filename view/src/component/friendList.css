@@ -27,6 +27,7 @@
 	background-color: #dddddd;
 }
 #friend-list > .friend > .friend-img-wrapper > .friend-img {
+	display: block;
 	position: relative;
 	left: 50%;
 	width: auto;

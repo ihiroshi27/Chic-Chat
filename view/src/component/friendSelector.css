@@ -50,6 +50,7 @@
 	margin-right: 10px;
 }
 #friend-selector > .friend > .friend-img-wrapper > img {
+	display: block;
 	position: relative;
 	left: 50%;
 	width: auto;
