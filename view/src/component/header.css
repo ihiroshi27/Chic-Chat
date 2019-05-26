@@ -19,6 +19,85 @@
 #header > .wrapper > .search > form > .input-button {
 	width: 500px;
 }
+#header > .wrapper > .search > .search_list {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	width: 500px;
+	height: 200px;
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+	z-index: 1;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#header > .wrapper > .search > .search_list > .friend {
+	padding: 5px 0px;
+	border-bottom: 1px solid #f3f3f3;
+}
+#header > .wrapper > .search > .search_list > .friend:last-of-type {
+	border-bottom: 0px;
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-img-wrapper {
+	float: left;
+	width: 60px;
+	height: 60px;
+	overflow: hidden;
+	border-radius: 100px;
+	margin-right: 20px;
+	border: 1px solid #dddddd;
+	box-sizing: border-box;
+	background-color: #dddddd;
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-img-wrapper > .friend-img {
+	display: block;
+	position: relative;
+	left: 50%;
+	width: auto;
+	height: 100%;
+	transform: translateX(-50%);
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-profile {
+	float: left;
+	padding-top: 15px;
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-profile > .friend-profile-name {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.9em;
+	color: #ee5253;
+	line-height: 1.2;
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-profile > .friend-profile-username {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.7em;
+	font-weight: lighter;
+	color: #949494;
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-option {
+	float: right;
+	padding: 20px 0px;
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-option > button {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.8em;
+	border: none;
+	background: transparent;
+	outline: none;
+	color: #a5a5a5;
+	transition: color 0.5s;
+}
+#header > .wrapper > .search > .search_list > .friend > .friend-option > button:hover {
+	cursor: pointer;
+	color: #ee5253;
+}
+#header > .wrapper > .search > .search_list > .friend::after {
+	display: block;
+	content: '';
+	clear: both;
+}
 #header > .wrapper > .profile {
 	float: right;
 }
