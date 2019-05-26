@@ -38,7 +38,7 @@ exports.decode = function(token) {
 		user.getByID(id)
 		.then((rows) => {
 			if (rows.length !== 1) {
-				reject('Invalid Token');
+				reject(new Error('Invalid Token'));
 			} else {
 				let password = rows[0].password;
 				let signatureCheck = escapeBase64Url(
@@ -48,7 +48,7 @@ exports.decode = function(token) {
 					).toString(CryptoJS.enc.Base64)
 				);
 				if (signatureCheck !== signature) {
-					reject('Invalid Token');
+					reject(new Error('Invalid Token'));
 				}
 				resolve(JSON.parse(Buffer.from(unescapeBase64Url(payload), 'base64').toString()));
 			}
