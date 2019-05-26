@@ -42,10 +42,16 @@ class App extends React.Component {
 			})
 			.then(response => response.json().then(body => ({ status: response.status, body: body })))
 			.then(response => {
-				this.setState({
-					user_fetched: true,
-					user: response.body.user
-				});
+				if (response.status !== 200) {
+					alert('Invalid Token');
+					localStorage.removeItem("token");
+					window.location.href = '/';
+				} else {
+					this.setState({
+						user_fetched: true,
+						user: response.body.user
+					});
+				}
 			});
 		}
 	}
