@@ -8,6 +8,7 @@ import Search from './route/search';
 import EditProfile from './route/editProfile';
 import ForgotPassword from './route/forgotPassword';
 import ResetPassword from './route/resetPassword';
+import LoginHistory from './route/loginHistory';
 
 import Header from './component/header';
 import Footer from './component/footer';
@@ -69,7 +70,8 @@ class App extends React.Component {
 						<Header user={ this.state.user } />
 						<Route exact path="/" render={(props) => (<Home {...props} user={ this.state.user } />) } />
 						<Route exact path="/search" render={(props) => (<Search {...props} />) } />
-						<Route exact path="/edit-profile" render={(props) => (<EditProfile {...props} user={ this.state.user} />) } />
+						<Route exact path="/edit-profile" render={(props) => (<EditProfile {...props} user={ this.state.user } />) } />
+						<Route exact path="/login-history" render={(props) => (<LoginHistory {...props} user={ this.state.user } />)} />
 						<Footer />
 					</BrowserRouter>
 				)

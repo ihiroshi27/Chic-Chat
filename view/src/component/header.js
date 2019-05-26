@@ -37,6 +37,7 @@ class Header extends React.Component {
 					</div>
 					<div className="profile-option" hidden={ !this.state.showProfileOption }>
 						<Link to="/edit-profile" onClick={ () => this.setState({ showProfileOption: false }) }><i className="fas fa-user-edit"></i> Edit Profile</Link>
+						<Link to="/login-history" onClick={ () => this.setState({ showProfileOption: false }) }><i className="fas fa-history"></i> Login History</Link>
 						<button onClick={ this.signOut }><i className="fas fa-sign-out-alt"></i> Sign Out</button>
 					</div>
 				</div>

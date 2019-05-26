@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const config = require('../config');
 const token = require('../token');
 const user = require('../model/user');
+const login = require('../model/login');
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
@@ -74,6 +75,20 @@ router.put('/', upload.single('file'), function(req, res, next) {
 			}
 			user.updateByID(payload.id, update)
 			.then((results) => res.json({ results: "Complete" }))
+			.catch((err) => next(err));
+		})
+		.catch((err) => next(err));
+	}
+});
+
+router.get('/login-history', function(req, res, next) {
+	if (typeof req.headers.authorization === "undefined") {
+		next(new Error('Invalid Token'));
+	} else {
+		token.decode(req.headers.authorization.replace('Bearer ', ''))
+		.then((user) => {
+			login.find(user.id)
+			.then((rows) => res.json({ results: rows }))
 			.catch((err) => next(err));
 		})
 		.catch((err) => next(err));

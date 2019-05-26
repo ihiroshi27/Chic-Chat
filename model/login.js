@@ -8,3 +8,12 @@ exports.create = function(userID, attempt, lat, lng) {
 		});
 	});
 }
+
+exports.find = function(userID) {
+	return new Promise(function(resolve, reject) {
+		db.query("SELECT * FROM login WHERE user_id = '" + userID + "' ORDER BY dateadded DESC", (err, rows) => {
+			if (err) reject(err);
+			else resolve(rows);
+		});
+	});
+}

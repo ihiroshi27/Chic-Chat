@@ -1,0 +1,132 @@
+#login-history {
+	height: 100%;
+}
+#login-history > .section {
+	padding: 20px 0px;
+	box-sizing: border-box;
+}
+#login-history > .section > .body {
+	box-sizing: border-box;
+	background-color: #ffffff;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	margin-bottom: 10px;
+	align-items: center;
+	overflow: hidden;
+	border-bottom: 4px solid #ee5253;
+}
+#login-history > .section > .body > .history > table {
+	width: 100%;
+	border-collapse: collapse;
+}
+#login-history > .section > .body > .history > table > tbody > tr > th {
+	font-family: 'Prompt', sans-serif;
+	font-weight: normal;
+	text-align: left;
+	color: #707070;
+	padding: 20px 30px;
+	border-bottom: 1px solid #dfdfdf;
+	background-color: #f7f7f7;
+}
+#login-history > .section > .body > .history > table > tbody > tr > td {
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.9em;
+	color: #2c2c2c;
+	padding: 15px 30px;
+	border-bottom: 1px solid #dfdfdf;
+}
+#login-history > .section > .body > .history > table > tbody > tr:nth-of-type(odd) > td {
+	background-color: #f7f7f7;
+}
+#login-history > .section > .body > .history > table > tbody > tr > td > button {
+	font-size: 0.9em;
+}
+#login-history > .section > .body > .option {
+	padding: 20px 30px;
+	text-align: right;
+}
+#login-history > .section > .body > .option > label {
+	font-family: 'Prompt', sans-serif;
+	font-weight: lighter;
+	font-size: 0.85em;
+	color: #8b8b8b;
+}
+#login-history > .section > .body > .option > select {
+	appearance: none;
+	font-family: 'Prompt', sans-serif;
+	font-weight: lighter;
+	font-size: 0.85em;
+	padding-left: 10px;
+	padding-right: 20px;
+	border: 0px;
+	outline: none;
+	color: #8b8b8b;
+	background-color: transparent;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath fill='%23919191' d='M41,180.7152328491211 h238 c21.4,0 32.1,25.9 17,41 L177,340.7152328491211 c-9.4,9.4 -24.6,9.4 -33.9,0 L24,221.7152328491211 c-15.1,-15.1 -4.4,-41 17,-41 z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-size: auto 80%;
+	background-position: right 5px top 2px;
+}
+#login-history > .section > .body > .option > span {
+	font-family: 'Prompt', sans-serif;
+	font-weight: lighter;
+	font-size: 0.85em;
+	color: #8b8b8b;
+	padding: 0px 20px;
+}
+#login-history > .section > .body > .option > button {
+	font-size: 0.9em;
+	padding-left: 15px;
+	border: none;
+	color: #2c2c2c;
+	background: transparent;
+	outline: none;
+}
+#login-history > .section > .body > .option > button:hover {
+	cursor: pointer;
+}
+#login-history > .section > .body > .option > button:disabled:hover {
+	cursor: default;
+}
+#login-history > .section > .body > .option > button:disabled {
+	color: #c0c0c0;
+}
+#login-history > #map {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+#login-history > #map > .overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+#login-history > #map > iframe {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 700px;
+	height: 500px;
+	background-color: #ffffff;
+	border: 0px;
+	border-radius: 10px;
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+	padding: 15px;
+	box-sizing: border-box;
+}
+#login-history > #map > .close {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(330px, -260px);
+	font-size: 30px;
+	color: #3d3d3d;
+}
+#login-history > #map > .close:hover {
+	cursor: pointer;
+}
