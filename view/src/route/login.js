@@ -42,11 +42,12 @@ class Login extends React.Component {
 					localStorage.setItem("attempt", attempt);
 					if (attempt > 2) {
 						this.setState({ isRecaptchaHidden: false });
+						window.grecaptcha.reset();
 					}
 					alert(response.body.error);
 				} else {
 					localStorage.setItem("token", response.body.token);
-					localStorage.removeItem("attempt")
+					localStorage.removeItem("attempt");
 					window.location.reload();
 				}
 				this.setState({ isSubmitFormComplete: true });
