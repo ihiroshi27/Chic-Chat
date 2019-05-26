@@ -1,6 +1,7 @@
 const express = require('express');
 const crypto = require('crypto'); 
 const bcrypt = require('bcrypt');
+const ejs = require("ejs");
 
 const config = require('../config');
 const mail = require('../mail');
@@ -27,19 +28,24 @@ router.post('/', function(req, res, next) {
 			let resetToken = escapeBase64Url(crypto.randomBytes(16).toString('base64'));
 			reset.create(user.id, email, resetToken)
 			.then((results) => {
-				var mailOptions = {
-					from: config.mail.auth.user,
-					to: email,
-					subject: 'Reset your Chic-Chat password',
-					html: '<p style="font-family: Arial, Helvetica, sans-serif;font-size: 18px;font-weight: bold;">Hello ' + user.name + '!</p>'
-						+ '<p style="font-family: Arial, Helvetica, sans-serif;color: #7E7E7E">Follow this link to reset your Chic-Chat password for your ' + email + ' account.</p>'
-						+ '<a href="' + config.view.url + '/reset-password?token=' + resetToken + '">' + config.view.url + '/reset-password?token=' + resetToken + '</a><br/>'
-						+ '<p style="font-family: Arial, Helvetica, sans-serif;color: #7E7E7E">If you did not ask to reset your password, you can ignore this email.</p>'
-						+ '<p style="font-family: Arial, Helvetica, sans-serif;color: #7E7E7E">Regards,<br/>Chic Chat</p>'
-				};
-				mail.sendMail(mailOptions, (err, info) => {
+				ejs.renderFile(__dirname + "/../template/passwordResetEmail.ejs", {
+					name: user.name,
+					email: email,
+					link: config.view.url + '/reset-password?token=' + resetToken
+				}, (err, html) => {
 					if (err) next(err);
-					else res.json({ results: "Complete" })
+					else {
+						var mailOptions = {
+							from: config.mail.auth.user,
+							to: email,
+							subject: 'Reset your Chic-Chat password',
+							html: html
+						};
+						mail.sendMail(mailOptions, (err, info) => {
+							if (err) next(err);
+							else res.json({ results: "Complete" })
+						});
+					}
 				});
 			})
 			.catch((err) => next(err));
