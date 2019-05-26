@@ -33,6 +33,9 @@ class ResetPassword extends React.Component {
 				if (response.status !== 200) {
 					alert(response.body.error);
 				} else {
+					if (localStorage.getItem("token")) {
+						localStorage.removeItem("token");
+					}
 					window.location.href = '/';
 				}
 				this.setState({ isSubmitFormComplete: true });

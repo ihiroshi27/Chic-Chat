@@ -78,6 +78,7 @@ class App extends React.Component {
 						<Route exact path="/search" render={(props) => (<Search {...props} />) } />
 						<Route exact path="/edit-profile" render={(props) => (<EditProfile {...props} user={ this.state.user } />) } />
 						<Route exact path="/login-history" render={(props) => (<LoginHistory {...props} user={ this.state.user } />)} />
+						<Route exact path="/reset-password" component={ ResetPassword } />
 						<Footer />
 					</BrowserRouter>
 				)
