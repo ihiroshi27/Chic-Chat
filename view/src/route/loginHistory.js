@@ -88,7 +88,7 @@ class LoginHistory extends React.Component {
 														return (
 															<tr key={ index }>
 																<td>{ Moment(history.dateadded).format("YYYY-MM-DD HH:MM:SS") }</td>
-																<td>{ history.attempt }</td>
+																<td style={{ color: history.attempt === "Success" ? "#8cb203" : '#d62e0c' }}>{ history.attempt }</td>
 																<td>{ history.lat }</td>
 																<td>{ history.lng }</td>
 																<td><button className="button grey-outset" onClick={ () => { this.onShowMap(history.lat, history.lng) } }><i className="fas fa-map-marked"></i> Show</button></td>
