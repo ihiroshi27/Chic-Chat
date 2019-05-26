@@ -47,6 +47,25 @@ class EditProfile extends React.Component {
 			this.setState({ isSubmitFormComplete: true });
 		});
 	}
+	onResetPassword = () => {
+		this.setState({ isSubmitFormComplete: false });
+		fetch(API_URL + '/reset', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ email: this.props.user.email })
+		})
+		.then(response => response.json().then(body => ({ status: response.status, body: body })))
+		.then(response => {
+			if (response.status !== 200) {
+				alert(response.body.error);
+			} else {
+				alert('Password reset link has been sent to your email\n' + this.props.user.email);
+			}
+			this.setState({ isSubmitFormComplete: true });
+		});
+	}
 	render() {
 		return (
 			<div id="container">
@@ -79,6 +98,7 @@ class EditProfile extends React.Component {
 										<input name="citizen_id" type="text" pattern="[0-9]{13}" placeholder="Citizen ID" defaultValue={ this.props.user.citizen_id } required />
 									</div>
 									<input onChange={ this.onProfileChange } ref={ input => { this.file = input } } name="file" type="file" style={{ display: 'none' }} />
+									<button className="button full red-outset" type="button" onClick={ this.onResetPassword }><i className="fas fa-key"></i> Reset Password</button>
 									<button className="button full red" type="submit"><i className="fas fa-user-edit"></i> Edit Profile</button>
 								</form>
 							</div>

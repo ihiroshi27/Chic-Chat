@@ -40,3 +40,9 @@
 	color: #ffffff;
 	background-color: #ee5253;
 }
+.button.red-outset {
+	color: #ee5253;
+	border: 2px solid #ee5253;
+	background: transparent;
+	text-shadow: none;
+}
