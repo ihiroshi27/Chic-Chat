@@ -114,7 +114,7 @@ class LoginHistory extends React.Component {
 						</div>
 						<div id="map" hidden={ this.state.isMapHidden }>
 							<div className="overlay" onClick={ () => this.setState({ isMapHidden: true }) }></div>
-							<iframe ref={ iframe => { this.map = iframe }}></iframe>
+							<iframe title="map" ref={ iframe => { this.map = iframe }}></iframe>
 							<div className="close" onClick={ () => this.setState({ isMapHidden: true }) }><i className="fas fa-times-circle"></i></div>
 						</div>
 					</div>
