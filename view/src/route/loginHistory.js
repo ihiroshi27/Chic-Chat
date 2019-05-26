@@ -50,6 +50,9 @@ class LoginHistory extends React.Component {
 	onNextPage = () => {
 		this.setState({ current_page: this.state.current_page + 1 });
 	}
+	onDownload = (type) => {
+		window.location.href = API_URL + '/user/login-history/' + type + '?token=' + localStorage.getItem("token");
+	}
 	render() {
 		if (!this.state.history_fetched) {
 			return (
@@ -100,6 +103,8 @@ class LoginHistory extends React.Component {
 									</table>
 								</div>
 								<div className="option">
+									<button onClick={ () => { this.onDownload('csv') } } className="download button grey-outset"><i className="fas fa-file-csv"></i> Download CSV</button>
+									<button onClick={ () => { this.onDownload('pdf') } } className="download button grey-outset"><i className="fas fa-file-pdf"></i> Download PDF</button>
 									<label>Rows per page:</label>
 									<select onChange={ this.onRowsPerPageChange }>
 										<option value="10">10</option>
@@ -107,8 +112,8 @@ class LoginHistory extends React.Component {
 										<option value="100">100</option>
 									</select>
 									<span>{ (this.state.current_page * this.state.rows_per_page) - this.state.rows_per_page + 1 } - { this.state.current_page * this.state.rows_per_page } of { this.state.history.length }</span>
-									<button onClick={ this.onPreviousPage } disabled={ this.state.current_page === 1 }><i className="fas fa-chevron-left"></i></button>
-									<button onClick={ this.onNextPage} disabled={ this.state.current_page * this.state.rows_per_page >= this.state.history.length }><i className="fas fa-chevron-right"></i></button>
+									<button className="navigator" onClick={ this.onPreviousPage } disabled={ this.state.current_page === 1 }><i className="fas fa-chevron-left"></i></button>
+									<button className="navigator" onClick={ this.onNextPage} disabled={ this.state.current_page * this.state.rows_per_page >= this.state.history.length }><i className="fas fa-chevron-right"></i></button>
 								</div>
 							</div>
 						</div>

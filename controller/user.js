@@ -2,6 +2,7 @@ const https = require('https');
 const express = require('express');
 const multer  = require('multer');
 const bcrypt = require('bcrypt');
+const PDFDocument = require('pdfkit');
 
 const config = require('../config');
 const token = require('../token');
@@ -125,6 +126,68 @@ router.get('/login-history', function(req, res, next) {
 		.then((user) => {
 			login.find(user.id)
 			.then((rows) => res.json({ results: rows }))
+			.catch((err) => next(err));
+		})
+		.catch((err) => next(err));
+	}
+});
+
+router.get('/login-history/:type', function(req, res, next) {
+	if (typeof req.query.token === "undefined") {
+		next(new Error('Invalid Token'));
+	} else {
+		token.decode(req.query.token)
+		.then((user) => {
+			login.find(user.id)
+			.then((rows) => {
+				switch(req.params.type) {
+					case 'csv':
+						let data = [
+							'Datetime, Success/Failed, Latitude, Longitude',
+							rows.map((row) => {
+								let date = new Date(row.dateadded);
+								return (
+									[
+										date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
+										row.attempt,
+										row.lat,
+										row.lng
+									]
+								);
+							}).join("\n")
+						].join("\n");
+						res.attachment('login-history.csv');
+						res.status(200).send(data);
+						break;
+					case 'pdf':
+						const doc = new PDFDocument;
+						res.attachment('login-history.pdf');
+						doc.fontSize(16).text('Chic Chat Login History', { align: 'center' });
+						doc.moveDown();
+						rows.forEach((row) => {
+							let date = new Date(row.dateadded);
+							doc.fontSize(14)
+								.fillColor('#898989')
+								.text('Datetime: ', { continued: true })
+								.fillColor('#000000')
+								.text([date.toLocaleDateString(), date.toLocaleTimeString()].join(' '));
+							doc.fontSize(14)
+								.fillColor('#898989')
+								.text('Attempt: ', { continued: true })
+								.fillColor(row.attempt === "Success" ? "#8cb203" : '#d62e0c')
+								.text(row.attempt);
+								doc.fontSize(14)
+								.fillColor('#898989')
+								.text('Location: ', { continued: true })
+								.fillColor('#000000')
+								.text([row.lat, row.lng].join(', '));
+							doc.moveDown();
+						});
+						doc.pipe(res);
+						doc.end();
+						break;
+				}
+			})
 			.catch((err) => next(err));
 		})
 		.catch((err) => next(err));

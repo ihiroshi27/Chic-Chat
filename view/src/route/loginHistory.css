@@ -38,17 +38,19 @@
 #login-history > .section > .body > .history > table > tbody > tr:nth-of-type(odd) > td {
 	background-color: #f7f7f7;
 }
-#login-history > .section > .body > .history > table > tbody > tr > td > button {
-	font-size: 0.9em;
-}
 #login-history > .section > .body > .option {
-	padding: 20px 30px;
+	padding: 10px 30px;
 	text-align: right;
+}
+#login-history > .section > .body > .option > button.download {
+	float: left;
+	font-size: 0.85em;
 }
 #login-history > .section > .body > .option > label {
 	font-family: 'Prompt', sans-serif;
 	font-weight: lighter;
 	font-size: 0.85em;
+	line-height: 3.5;
 	color: #8b8b8b;
 }
 #login-history > .section > .body > .option > select {
@@ -74,7 +76,7 @@
 	color: #8b8b8b;
 	padding: 0px 20px;
 }
-#login-history > .section > .body > .option > button {
+#login-history > .section > .body > .option > button.navigator {
 	font-size: 0.9em;
 	padding-left: 15px;
 	border: none;
@@ -82,13 +84,13 @@
 	background: transparent;
 	outline: none;
 }
-#login-history > .section > .body > .option > button:hover {
+#login-history > .section > .body > .option > button.navigator:hover {
 	cursor: pointer;
 }
-#login-history > .section > .body > .option > button:disabled:hover {
+#login-history > .section > .body > .option > button.navigator:disabled:hover {
 	cursor: default;
 }
-#login-history > .section > .body > .option > button:disabled {
+#login-history > .section > .body > .option > button.navigator:disabled {
 	color: #c0c0c0;
 }
 #login-history > #map {
