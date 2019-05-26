@@ -1,3 +1,7 @@
+#edit-profile > .section {
+	padding: 20px 0px;
+	box-sizing: border-box;
+}
 #edit-profile > .section > .body {
 	box-sizing: border-box;
 	background-color: #f7f7f7;
