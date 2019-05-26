@@ -45,10 +45,11 @@ class ResetPassword extends React.Component {
 	render() {
 		return (
 			<div id="container">
-				<div id="reset-password" className="wrapper">
+				<div id="reset-password" className={"wrapper " + (localStorage.getItem("token") ? "token" : "no-token") }>
 					<div className="section">
+						<div className="title" hidden={ !localStorage.getItem("token") }><Link to="/"><i className="fas fa-angle-left"></i></Link> Reset your password</div>
 						<div className="body">
-							<div className="title"><Link to="/"><i className="fas fa-angle-left"></i></Link> Reset your password</div>
+							<div className="title" hidden={ localStorage.getItem("token") }><Link to="/"><i className="fas fa-angle-left"></i></Link> Reset your password</div>
 							<form onSubmit={ this.onSubmit }>
 								<div className="input-icon">
 									<i className="fas fa-envelope"></i>
