@@ -1,6 +1,5 @@
 ## Installation
 - Install **NodeJS** and **MySQL Server**
-- Config MySQL Server in **config.js**
 - Create Database
   - `CREATE DATABASE chic_chat;`
 - Create Table
@@ -11,6 +10,11 @@
   - `CREATE TABLE login (user_id int NOT NULL, attempt varchar(255) NOT NULL, lat double NOT NULL, lng double NOT NULL, dateadded datetime default CURRENT_TIMESTAMP)`
 
 - `npm install` at **root directory** and **view directory**
+
+## Configuration
+You need to configure a **MySQL, Nodemailer** and **reCAPTCHA v2**
+- Back-end configuration will located in **config.js** at **root directory**
+- Front-end configuration will located in **.env** at **view directory**
 
 ## Running
 - `npm start` at **root directory** and **view directory**
