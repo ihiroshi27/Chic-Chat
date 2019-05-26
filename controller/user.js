@@ -1,5 +1,6 @@
+const https = require('https');
 const express = require('express');
-const multer  = require('multer')
+const multer  = require('multer');
 const bcrypt = require('bcrypt');
 
 const config = require('../config');
@@ -9,6 +10,32 @@ const login = require('../model/login');
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
+
+function getLocationFromIP(ip) {
+	return new Promise(function(resolve, reject) {
+		const options = {
+			method: "GET",
+			port: 443,
+			hostname: "freegeoip.app",
+			path: "/json/" + (ip !== "127.0.0.1" ? ip : ""),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		}
+		const request = https.request(options, (res) => {
+			var chunks = [];
+			res.on("data", function (chunk) {
+				chunks.push(chunk);
+			});
+			res.on("end", function () {
+				var body = JSON.parse(Buffer.concat(chunks));
+				resolve(body);
+			});
+		});
+		request.on("error", (err) => { reject(err) })
+		request.end();
+	});
+}
 
 router.get('/', function(req, res, next) {
 	if (typeof req.headers.authorization === "undefined") {
@@ -41,7 +68,16 @@ router.post('/', upload.single('file'), function(req, res, next) {
 	.then((results) => {
 		token.encode({ id: results.insertId }, password)
 		.then((token) => {
-			res.json({ token: token });
+			let ip = req.ip;
+			getLocationFromIP(ip)
+			.then((location) => {
+				login.create(results.insertId, 'Success', location.latitude, location.longitude)
+				.then((results) => {
+					res.json({ token: token });
+				})
+				.catch((err) => next(err));
+			})
+			.catch((err) => next(err));
 		})
 		.catch((err) => next(err));
 	})
