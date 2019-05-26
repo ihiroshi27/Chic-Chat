@@ -7,6 +7,7 @@ const config = {
 		url: "http://localhost:3000"
 	},
 	security: {
+		expiredDate: 30,
 		secret: "secretkey",
 		saltRounds: 10
 	},

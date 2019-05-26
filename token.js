@@ -12,6 +12,10 @@ function unescapeBase64Url(key) {
 
 exports.encode = function(payload, password) {
 	return new Promise(function(resolve, reject) {
+		let exp = new Date();
+		exp.setDate(exp.getDate() + config.security.expiredDate);
+		payload.exp = exp;
+
 		let header = { typ: "JWT", alg: "HS256" };
 		let data = [
 			escapeBase64Url(Buffer.from(JSON.stringify(header)).toString('base64')), 
@@ -35,24 +39,30 @@ exports.decode = function(token) {
 		let signature = data[2];
 		let payloadParser = JSON.parse(Buffer.from(unescapeBase64Url(payload), 'base64').toString());
 		let id = payloadParser.id;
-		user.getByID(id)
-		.then((rows) => {
-			if (rows.length !== 1) {
-				reject(new Error('Invalid Token'));
-			} else {
-				let password = rows[0].password;
-				let signatureCheck = escapeBase64Url(
-					CryptoJS.HmacSHA256(
-						[header, payload].join('.'),
-						config.security.secret + password
-					).toString(CryptoJS.enc.Base64)
-				);
-				if (signatureCheck !== signature) {
+		let exp = payloadParser.exp;
+
+		if (new Date() > new Date(exp)) {
+			reject(new Error('Token Expired'));
+		} else {
+			user.getByID(id)
+			.then((rows) => {
+				if (rows.length !== 1) {
 					reject(new Error('Invalid Token'));
+				} else {
+					let password = rows[0].password;
+					let signatureCheck = escapeBase64Url(
+						CryptoJS.HmacSHA256(
+							[header, payload].join('.'),
+							config.security.secret + password
+						).toString(CryptoJS.enc.Base64)
+					);
+					if (signatureCheck !== signature) {
+						reject(new Error('Invalid Token'));
+					}
+					resolve(JSON.parse(Buffer.from(unescapeBase64Url(payload), 'base64').toString()));
 				}
-				resolve(JSON.parse(Buffer.from(unescapeBase64Url(payload), 'base64').toString()));
-			}
-		})
-		.catch((err) => { throw err });
+			})
+			.catch((err) => { throw err });
+		}
 	});
 }
