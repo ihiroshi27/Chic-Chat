@@ -43,7 +43,7 @@ class App extends React.Component {
 			.then(response => response.json().then(body => ({ status: response.status, body: body })))
 			.then(response => {
 				if (response.status !== 200) {
-					alert('Invalid Token');
+					alert(response.body.error);
 					localStorage.removeItem("token");
 					window.location.href = '/';
 				} else {
