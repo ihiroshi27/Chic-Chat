@@ -73,8 +73,8 @@ class App extends React.Component {
 			} else {
 				return (
 					<BrowserRouter>
-						<Header user={ this.state.user } />
-						<Route exact path="/" render={(props) => (<Home {...props} user={ this.state.user } />) } />
+						<Header user={ this.state.user } refetchFriend={() => this.refetchFriend() } />
+						<Route exact path="/" render={(props) => (<Home {...props} user={ this.state.user } refetchFriend={ refetch => this.refetchFriend = refetch } />) } />
 						<Route exact path="/search" render={(props) => (<Search {...props} />) } />
 						<Route exact path="/edit-profile" render={(props) => (<EditProfile {...props} user={ this.state.user } />) } />
 						<Route exact path="/login-history" render={(props) => (<LoginHistory {...props} user={ this.state.user } />)} />

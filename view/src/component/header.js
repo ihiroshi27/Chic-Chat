@@ -65,6 +65,7 @@ class Header extends React.Component {
 	refetch = () => {
 		let query = this.query.value;
 		this.fetchSearch(query);
+		this.props.refetchFriend();
 	}
 	onAddFriend(friendID) {
 		fetch(API_URL + '/friend', {

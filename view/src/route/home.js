@@ -24,6 +24,7 @@ class Home extends React.Component {
 	}
 	componentWillMount() {
 		this.fetchFriend();
+		this.props.refetchFriend(this.fetchFriend);
 	}
 	fetchFriend = () => {
 		fetch(API_URL + "/friend", {
