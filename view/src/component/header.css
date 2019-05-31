@@ -34,6 +34,13 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+#header > .wrapper > .search > .search_list > .message {
+	font-family: 'Prompt', sans-serif;
+	font-size: 1em;
+	text-align: center;
+	line-height: 180px;
+	color: #818181;
+}
 #header > .wrapper > .search > .search_list > .friend {
 	padding: 5px 0px;
 	border-bottom: 1px solid #f3f3f3;

@@ -135,27 +135,30 @@ class Header extends React.Component {
 								!this.state.friends_fetched ?
 									<div className="loading"><div></div><div></div></div>
 								:
-									this.state.friends.map((friend, index) => {
-										return (
-											<div className="friend" key={ index }>
-												<div className="friend-img-wrapper">
-													<img className="friend-img" src={ API_URL + '/static/' + friend.profile } alt={ friend.name } />
+									this.state.friends.length === 0 ?
+										<div className="message"><i className="fas fa-info-circle"></i> Not Found</div>
+									:
+										this.state.friends.map((friend, index) => {
+											return (
+												<div className="friend" key={ index }>
+													<div className="friend-img-wrapper">
+														<img className="friend-img" src={ API_URL + '/static/' + friend.profile } alt={ friend.name } />
+													</div>
+													<div className="friend-profile">
+														<div className="friend-profile-name">{ friend.name }</div>
+														<div className="friend-profile-username"><i className="fas fa-user-tag"></i> { friend.username }</div>
+													</div>
+													<div className="friend-option">
+														{ 
+															friend.friended === "NO" ?
+																<button onClick={ () => this.onAddFriend(friend.id) }><i className="fas fa-user-plus"></i> Add Friend</button>
+															:
+															<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Unfriend</button>
+														}
+													</div>
 												</div>
-												<div className="friend-profile">
-													<div className="friend-profile-name">{ friend.name }</div>
-													<div className="friend-profile-username"><i className="fas fa-user-tag"></i> { friend.username }</div>
-												</div>
-												<div className="friend-option">
-													{ 
-														friend.friended === "NO" ?
-															<button onClick={ () => this.onAddFriend(friend.id) }><i className="fas fa-user-plus"></i> Add Friend</button>
-														:
-														<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Unfriend</button>
-													}
-												</div>
-											</div>
-										)
-									})
+											)
+										})
 							}
 						</div>
 					</div>
