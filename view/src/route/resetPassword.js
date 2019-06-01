@@ -11,6 +11,18 @@ class ResetPassword extends React.Component {
 			isSubmitFormComplete: true
 		}
 	}
+	componentWillMount() {
+		const params = new URLSearchParams(this.props.location.search); 
+		const token = params.get('token');
+		fetch(API_URL + '/reset/' + token)
+		.then(response => response.json().then(body => ({ status: response.status, body: body })))
+		.then(response => {
+			if (response.status !== 200) {
+				alert(response.body.error);
+				window.location.href = '/';
+			}
+		});
+	}
 	onSubmit = (event) => {
 		event.preventDefault();
 		let password = event.target.password.value;
@@ -21,7 +33,7 @@ class ResetPassword extends React.Component {
 			this.setState({ isSubmitFormComplete: false });
 			const params = new URLSearchParams(this.props.location.search); 
 			const token = params.get('token');
-			fetch(API_URL + '/reset?token=' + token, {
+			fetch(API_URL + '/reset/' + token, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'

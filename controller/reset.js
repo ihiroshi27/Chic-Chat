@@ -14,6 +14,19 @@ function escapeBase64Url(key) {
 	return key.replace(/\=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
 
+router.get('/:token', function(req, res, next) {
+	let token = req.params.token;
+	Reset.findOne({ where: { token: token } })
+	.then((reset) => {
+		if (!reset) {
+			next(new Error('Invalid Token'));
+		} else {
+			res.json({ status: "OK" })
+		}
+	})
+	.catch((err) => next(err));
+});
+
 router.post('/', function(req, res, next) {
 	let email = req.body.email;
 	User.findOne({ where: { email: email } })
@@ -53,8 +66,8 @@ router.post('/', function(req, res, next) {
 	.catch((err) => next(err));
 });
 
-router.put("/", function(req, res, next) {
-	let token = req.query.token;
+router.put("/:token", function(req, res, next) {
+	let token = req.params.token;
 	let password = bcrypt.hashSync(req.body.password, config.security.saltRounds);
 
 	Reset.findOne({ where: { token: token } })
