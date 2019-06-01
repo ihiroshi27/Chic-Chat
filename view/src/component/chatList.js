@@ -25,7 +25,7 @@ class ChatList extends React.Component {
 										<div className="profile-img-wrapper">
 											<img src={ API_URL + "/static/" + this.props.friend.profile } alt={ this.props.friend.name } />
 										</div>
-										<div className="timestamp">{ moment(chat.dateadded).fromNow() }</div>
+										<div className="timestamp">{ moment(chat.createdAt).fromNow() }</div>
 									</div>
 									<div className="message"><i className="fas fa-caret-left"></i>{ chat.message }</div>
 								</div>
@@ -38,7 +38,7 @@ class ChatList extends React.Component {
 										<div className="profile-img-wrapper">
 											<img src={ API_URL + "/static/" + this.props.user.profile } alt={ this.props.user.name } />
 										</div>
-										<div className="timestamp">{ moment(chat.dateadded).fromNow() }</div>
+										<div className="timestamp">{ moment(chat.createdAt).fromNow() }</div>
 									</div>
 								</div>
 							)

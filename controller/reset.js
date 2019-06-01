@@ -6,8 +6,7 @@ const ejs = require("ejs");
 const config = require('../config');
 const mail = require('../mail');
 
-const reset = require('../model/reset');
-const user = require('../model/user');
+const { User, Reset } = require('../db');
 
 const router = express.Router();
 
@@ -15,18 +14,18 @@ function escapeBase64Url(key) {
 	return key.replace(/\=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
 
-router.get('/', function(req, res, next) {
-	res.json({ 'test': 'test' });
-});
-
 router.post('/', function(req, res, next) {
 	let email = req.body.email;
-	user.getByEmail(email)
+	User.findOne({ where: { email: email } })
 	.then((user) => {
 		if (!user) next(new Error('Invalid Email'));
 		else {
 			let resetToken = escapeBase64Url(crypto.randomBytes(16).toString('base64'));
-			reset.create(user.id, email, resetToken)
+			Reset.create({
+				token: resetToken,
+				user_id: user.id,
+				email: email
+			})
 			.then((results) => {
 				ejs.renderFile(__dirname + "/../template/passwordResetEmail.ejs", {
 					name: user.name,
@@ -58,18 +57,17 @@ router.put("/", function(req, res, next) {
 	let token = req.query.token;
 	let password = bcrypt.hashSync(req.body.password, config.security.saltRounds);
 
-	reset.findByToken(token)
-	.then((rows) => {
-		if (rows.length === 0) {
-			next(new Error("Invalid Token"));
+	Reset.findOne({ where: { token: token } })
+	.then((reset) => {
+		if (!reset) {
+			next(new Error('Invalid Token'));
 		} else {
-			let userID = rows[0].user_id;
-			let update = ["password = '" + password + "'"];
-			user.updateByID(userID, update)
-			.then((results) => {
-				reset.remove(token)
-				.then((results) => {
-					res.json({ results: "Complete" });
+			let userID = reset.user_id;
+			User.update({ password: password }, { where: { id: userID } })
+			.then((result) => {
+				Reset.destroy({ where: { token: token } })
+				.then((result) => {
+					res.json({ result: "Complete" });
 				})
 				.catch((err) => next(err));
 			})

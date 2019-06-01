@@ -6,8 +6,7 @@ const PDFDocument = require('pdfkit');
 
 const config = require('../config');
 const token = require('../token');
-const user = require('../model/user');
-const login = require('../model/login');
+const { User, Login } = require('../db');
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
@@ -44,10 +43,10 @@ router.get('/', function(req, res, next) {
 	} else {
 		token.decode(req.headers.authorization.replace('Bearer ', ''))
 		.then((payload) => {
-			user.getByID(payload.id)
-			.then((rows) => {
-				delete(rows[0].password);
-				res.json({ user: rows[0] })
+			User.findOne({ where: { id: payload.id }})
+			.then((user) => {
+				delete(user.password);
+				res.json({ user: user })
 			})
 			.catch((err) => next(err));
 		})
@@ -56,33 +55,33 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', upload.single('file'), function(req, res, next) {
-	let username = req.body.username;
-	let password = bcrypt.hashSync(req.body.password, config.security.saltRounds);
-	let name = req.body.name;
-	let email = req.body.email;
-	let mobile = req.body.mobile;
-	let citizenID = req.body.citizen_id;
-	let profile = req.file.filename;
-	let mimetype = req.file.mimetype;
-
-	user.create(username, password, name, email, mobile, citizenID, profile, mimetype)
-	.then((results) => {
-		token.encode({ id: results.insertId }, password)
-		.then((token) => {
-			let ip = req.ip;
-			getLocationFromIP(ip)
-			.then((location) => {
-				login.create(results.insertId, 'Success', location.latitude, location.longitude)
-				.then((results) => {
-					res.json({ token: token });
+	if (req.body && req.file) {
+		req.body.password = bcrypt.hashSync(req.body.password, config.security.saltRounds);
+		req.body.profile = req.file.filename;
+		User.create(req.body)
+		.then((result) => {
+			token.encode({ id: result.id }, req.body.password)
+			.then((token) => {
+				let ip = req.ip;
+				getLocationFromIP(ip)
+				.then((location) => {
+					let login = {
+						user_id: result.id,
+						attempt: 'Success',
+						lat: location.latitude,
+						lng: location.longitude
+					}
+					Login.create(login)
+					.then((result) => {
+						res.json({ token: token });
+					})
+					.catch((err) => next(err));
 				})
 				.catch((err) => next(err));
-			})
-			.catch((err) => next(err));
+			});
 		})
 		.catch((err) => next(err));
-	})
-	.catch((err) => next(err));
+	}
 });
 
 router.put('/', upload.single('file'), function(req, res, next) {
@@ -96,22 +95,18 @@ router.put('/', upload.single('file'), function(req, res, next) {
 			let mobile = req.body.mobile;
 			let citizenID = req.body.citizen_id;
 
-			let update = [
-				"name = '" + name + "'",
-				"email = '" + email + "'",
-				"mobile = '" + mobile + "'",
-				"citizen_id = '" + citizenID + "'"
-			]
-			if (req.file) {
-				let profile = req.file.filename;
-				let mimetype = req.file.mimetype;
-				update = update.concat([
-					"profile = '" + profile + "'",
-					"mimetype = '" + mimetype + "'"
-				]);
+			let update = {
+				name: name,
+				email: email,
+				mobile: mobile,
+				citizen_id: citizenID
 			}
-			user.updateByID(payload.id, update)
-			.then((results) => res.json({ results: "Complete" }))
+			if (req.file) {
+				update.profile = req.file.filename;
+			}
+
+			User.update(update, { where: { id: payload.id } })
+			.then((result) => res.json({ result: "Complete" }))
 			.catch((err) => next(err));
 		})
 		.catch((err) => next(err));
@@ -124,8 +119,11 @@ router.get('/login-history', function(req, res, next) {
 	} else {
 		token.decode(req.headers.authorization.replace('Bearer ', ''))
 		.then((user) => {
-			login.find(user.id)
-			.then((rows) => res.json({ results: rows }))
+			Login.findAll({ 
+				where: { user_id: user.id },
+				order: [["created_at", "DESC"]]
+			})
+			.then((results) => res.json({ results: results }))
 			.catch((err) => next(err));
 		})
 		.catch((err) => next(err));
@@ -138,14 +136,17 @@ router.get('/login-history/:type', function(req, res, next) {
 	} else {
 		token.decode(req.query.token)
 		.then((user) => {
-			login.find(user.id)
+			Login.findAll({ 
+				where: { user_id: user.id },
+				order: [["created_at", "DESC"]]
+			})
 			.then((rows) => {
 				switch(req.params.type) {
 					case 'csv':
 						let data = [
 							'Datetime, Success/Failed, Latitude, Longitude',
 							rows.map((row) => {
-								let date = new Date(row.dateadded);
+								let date = new Date(row.createdAt);
 								return (
 									[
 										date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
@@ -165,7 +166,7 @@ router.get('/login-history/:type', function(req, res, next) {
 						doc.fontSize(16).text('Chic Chat Login History', { align: 'center' });
 						doc.moveDown();
 						rows.forEach((row) => {
-							let date = new Date(row.dateadded);
+							let date = new Date(row.createdAt);
 							doc.fontSize(14)
 								.fillColor('#898989')
 								.text('Datetime: ', { continued: true })

@@ -1,7 +1,7 @@
 const express = require('express');
 
 const token = require('../token');
-const chat = require('../model/chat');
+const { Op, Chat } = require('../db');
 
 const router = express.Router();
 
@@ -10,10 +10,18 @@ router.get('/:friendID', function(req, res, next) {
 		next(new Error('Invalid Token'));
 	} else {
 		token.decode(req.headers.authorization.replace('Bearer ', ''))
-		.then((payload) => {
+		.then((user) => {
 			let friendID = req.params.friendID;
-			chat.find(payload.id, friendID)
-			.then((rows) => res.json({ chat: rows }))
+			Chat.findAll({ 
+				where: {
+					[Op.or]: [
+						{ user_id1: user.id, user_id2: friendID },
+						{ user_id1: friendID, user_id2: user.id },
+					]
+				},
+				order: [['created_at', 'ASC']]
+			})
+			.then((chat) => res.json({ chat: chat }))
 			.catch((err) => next(err));
 		})
 		.catch((err) => next(err));
@@ -25,16 +33,21 @@ router.post('/', function(req, res, next) {
 		next(new Error('Invalid Token'));
 	} else {
 		token.decode(req.headers.authorization.replace('Bearer ', ''))
-		.then((payload) => {
+		.then((user) => {
+			let userID = user.id;
 			let friendID = req.body.friendID;
 			let message = req.body.message;
 
-			chat.create(payload.id, friendID, message)
-			.then((results) => {
-				res.json({ results: results });
+			Chat.create({
+				user_id1: userID,
+				user_id2: friendID,
+				message: message
+			})
+			.then((result) => {
+				res.json({ result: "Complete" });
 
 				if (req.listener.forEach((listen) => {
-					if (listen.userID === friendID && listen.friendID === payload.id) {
+					if (listen.userID === friendID && listen.friendID === userID) {
 						req.io.to(listen.clientID).emit('new');
 					}
 				}));

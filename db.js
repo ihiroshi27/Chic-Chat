@@ -1,6 +1,31 @@
-const mysql = require('mysql');
+const Sequelize = require('sequelize');
 const config = require('./config');
 
-const pool = mysql.createPool(config.db);
+const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
+    host: config.db.host,
+    dialect: 'mysql',
+    define: {
+        freezeTableName: true,
+        timestamp: true
+    }
+});
 
-module.exports = pool;
+const User = require('./model/user')(sequelize, Sequelize);
+const Login = require('./model/login')(sequelize, Sequelize);
+const Friend = require('./model/friend')(sequelize, Sequelize);
+const Reset = require('./model/reset')(sequelize, Sequelize);
+const Chat = require('./model/chat')(sequelize, Sequelize);
+
+const db = {
+    User,
+    Login,
+    Friend,
+    Reset,
+    Chat
+}
+
+module.exports = {
+    sequelize: sequelize,
+    Op: Sequelize.Op,
+    ...db
+}

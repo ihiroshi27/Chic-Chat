@@ -1,7 +1,7 @@
 const CryptoJS = require("crypto-js");
 
 const config = require('./config');
-const user = require('./model/user');
+const { User } = require('./db');
 
 function escapeBase64Url(key) {
 	return key.replace(/\=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
@@ -44,12 +44,12 @@ exports.decode = function(token) {
 		if (new Date() > new Date(exp)) {
 			reject(new Error('Token Expired'));
 		} else {
-			user.getByID(id)
-			.then((rows) => {
-				if (rows.length !== 1) {
+			User.findOne({ where: { id: id } })
+			.then((user) => {
+				if (!user) {
 					reject(new Error('Invalid Token'));
 				} else {
-					let password = rows[0].password;
+					let password = user.password;
 					let signatureCheck = escapeBase64Url(
 						CryptoJS.HmacSHA256(
 							[header, payload].join('.'),

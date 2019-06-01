@@ -83,11 +83,10 @@ class LoginHistory extends React.Component {
 												this.state.history.map((history, index) => {
 													let start = this.state.current_page * this.state.rows_per_page - this.state.rows_per_page;
 													let end = this.state.current_page * this.state.rows_per_page - 1;
-													console.log(start, end);
 													if (index >= start && index <= end) {
 														return (
 															<tr key={ index }>
-																<td>{ Moment(history.dateadded).format("YYYY-MM-DD HH:MM:SS") }</td>
+																<td>{ Moment(history.createdAt).format("MM/DD/YYYY hh:mm:ss A") }</td>
 																<td style={{ color: history.attempt === "Success" ? "#8cb203" : '#d62e0c' }}>{ history.attempt }</td>
 																<td>{ history.lat }</td>
 																<td>{ history.lng }</td>
