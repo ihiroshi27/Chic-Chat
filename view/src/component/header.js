@@ -171,6 +171,7 @@ class Header extends React.Component {
 						<button onClick={ () => { this.setState({ showProfileOption: !this.state.showProfileOption }) } } className="profile-button"><i className="fas fa-angle-down"></i></button>
 					</div>
 					<div id="profile-option" className="profile-option" hidden={ !this.state.showProfileOption }>
+						<Link to="/blocking" onClick={ () => this.setState({ showProfileOption: false }) }><i className="fas fa-user-slash"></i> Blocking</Link>
 						<Link to="/edit-profile" onClick={ () => this.setState({ showProfileOption: false }) }><i className="fas fa-user-edit"></i> Edit Profile</Link>
 						<Link to="/login-history" onClick={ () => this.setState({ showProfileOption: false }) }><i className="fas fa-history"></i> Login History</Link>
 						<button onClick={ this.signOut }><i className="fas fa-sign-out-alt"></i> Sign Out</button>

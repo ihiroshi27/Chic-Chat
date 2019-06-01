@@ -12,6 +12,10 @@ module.exports = (sequelize, dataTypes) => {
 				allowNull: false,
 				primaryKey: true
 			},
+			blocked: {
+				type: dataTypes.BOOLEAN,
+				defaultValue: false
+			},
 			createdAt: {
 				field: 'created_at',
 				type: dataTypes.DATE,
@@ -22,5 +26,6 @@ module.exports = (sequelize, dataTypes) => {
 			}
 		}
 	);
+	Friend.hasOne(Friend, { foreignKey: 'friend_id', sourceKey: 'user_id', as: 'friendship' })
 	return Friend;
 }

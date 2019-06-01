@@ -44,6 +44,26 @@ class FriendList extends React.Component {
 			}
 		});
 	}
+	onUnblock(friendID) {
+		fetch(API_URL + '/friend/unblock', {
+			method: 'PUT',
+			headers: {
+				'Authorization': "Bearer " + localStorage.getItem("token"),
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				friendID: friendID
+			})
+		})
+		.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
+		.then((response) => {
+			if (response.status !== 200) {
+				alert(response.body.error);
+			} else {
+				this.props.refetch();
+			}
+		});
+	}
 	render() {
 		return (
 			<div id="friend-list">
@@ -64,7 +84,10 @@ class FriendList extends React.Component {
 										friend.friended === "NO" ?
 											<button onClick={ () => this.onAddFriend(friend.id) }><i className="fas fa-user-plus"></i> Add Friend</button>
 										:
-										<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Unfriend</button>
+											friend.blocked === 1 ?
+												<button onClick={ () => this.onUnblock(friend.id) }><i className="fas fa-user-times"></i> Unblock</button>
+											:
+												<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Unfriend</button>
 									}
 								</div>
 							</div>

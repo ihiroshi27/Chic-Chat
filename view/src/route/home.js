@@ -158,10 +158,10 @@ class Home extends React.Component {
 									<input 
 										name="message"
 										type="text"
-										placeholder="Type a message"
+										placeholder={ this.state.friend.being_blocked ? "You have been blocked" : "Type a message" }
 										autoComplete="off"
 										onKeyUp={ this.onMessageKeyUp }
-										disabled={ !this.state.chat_fetched || (this.state.friends.length === 0) }
+										disabled={ !this.state.chat_fetched || (this.state.friends.length === 0) || this.state.friend.being_blocked }
 										required
 									/>
 									<button type="submit" title="Send"><i className="fas fa-paper-plane"></i></button>

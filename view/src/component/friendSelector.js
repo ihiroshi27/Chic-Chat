@@ -6,24 +6,49 @@ const API_URL = process.env.REACT_APP_API_URL;
 class FriendSelector extends React.Component {
 	onUnfriend(event, friendID) {
 		event.stopPropagation();
-		fetch(API_URL + '/friend', {
-			method: 'DELETE',
-			headers: {
-				'Authorization': "Bearer " + localStorage.getItem("token"),
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				friendID: friendID
+		if (window.confirm("Are you sure you want to remove this person as your friend?")) {
+			fetch(API_URL + '/friend', {
+				method: 'DELETE',
+				headers: {
+					'Authorization': "Bearer " + localStorage.getItem("token"),
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					friendID: friendID
+				})
 			})
-		})
-		.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
-		.then((response) => {
-			if (response.status !== 200) {
-				alert(response.body.error);
-			} else {
-				this.props.refetch();
-			}
-		});
+			.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
+			.then((response) => {
+				if (response.status !== 200) {
+					alert(response.body.error);
+				} else {
+					this.props.refetch();
+				}
+			});
+		}
+	}
+	onBlock(event, friendID) {
+		event.stopPropagation();
+		if (window.confirm("Are you sure you want to block this person?")) {
+			fetch(API_URL + '/friend/block', {
+				method: 'POST',
+				headers: {
+					'Authorization': "Bearer " + localStorage.getItem("token"),
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					friendID: friendID
+				})
+			})
+			.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
+			.then((response) => {
+				if (response.status !== 200) {
+					alert(response.body.error);
+				} else {
+					this.props.refetch();
+				}
+			});
+		}
 	}
 	render() {
 		return (
@@ -44,6 +69,7 @@ class FriendSelector extends React.Component {
 								<div className="friend-name">{ friend.name }</div>
 								<div className="friend-option">
 									<button title="Unfriend" onClick={ (event) => { this.onUnfriend(event, friend.id) } }><i className="fas fa-user-times"></i></button>
+									<button title="Block" onClick={ (event) => { this.onBlock(event, friend.id) } }><i className="fas fa-user-slash"></i></button>
 								</div>
 							</div>
 						)

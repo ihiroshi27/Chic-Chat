@@ -63,7 +63,7 @@
 	font-size: 1em;
 	line-height: 60px;
 	color: #525252;
-	width: calc(100% - 110px);
+	width: calc(100% - 140px);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -74,7 +74,7 @@
 #friend-selector > .friend > .friend-option {
 	float: right;
 	line-height: 60px;
-	width: 20px;
+	width: 50px;
 	margin: 0px 10px;
 }
 #friend-selector > .friend > .friend-option > button {
@@ -85,6 +85,10 @@
 	color: #969696;
 	outline: none;
 	box-sizing: border-box;
+	margin-right: 10px;
+}
+#friend-selector > .friend > .friend-option > button:last-of-type {
+	margin-right: 0px;
 }
 #friend-selector > .friend > .friend-option > button:hover {
 	cursor: pointer;

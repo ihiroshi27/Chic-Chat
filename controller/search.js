@@ -17,6 +17,12 @@ router.get('/', function(req, res, next) {
 			.then((user) => {
 				let userID = user.id;
 				User.findAll({ 
+					attributes: [
+						'id',
+						'name',
+						'username',
+						'profile'
+					],
 					where: {
 						id: { [Op.not]: userID },
 						[Op.or]: [
@@ -25,26 +31,25 @@ router.get('/', function(req, res, next) {
 							{ email: { [Op.like]: '%' + query + '%' } },
 							{ mobile: { [Op.like]: '%' + query + '%' } }
 						]
-					}
+					},
+					raw: true
 				})
 				.then((users) => {
 					let results = users.map(async (user, index) => {
 						let friend = await Friend.findOne({ where: { user_id: userID, friend_id: user.id  } });
 						if (friend) {
-							users[index].friended = "YES"
+							if (friend.blocked === true) {
+								users[index].friended = "BLOCK";
+							} else {
+								users[index].friended = "YES"
+							}
 						} else {
 							users[index].friended = "NO"
 						}
 					});
 					Promise.all(results).then((friends) => {
 						res.json({
-							friends: users.map((user) => ({
-								id: user.id,
-								name: user.name,
-								username: user.username,
-								profile: user.profile,
-								friended: user.friended
-							}))
+							friends: users.filter((user) => { return user.friended !== "BLOCK"; })
 						})
 					});
 				})

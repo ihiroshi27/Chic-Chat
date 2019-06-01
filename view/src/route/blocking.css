@@ -1,0 +1,7 @@
+#blocking {
+	height: 100%;
+}
+#blocking > .section {
+	padding: 20px 0px;
+	box-sizing: border-box;
+}
