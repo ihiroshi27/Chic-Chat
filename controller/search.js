@@ -1,7 +1,7 @@
 const express = require('express');
 
 const token = require('../token');
-const { Op, User, Friend } = require('../db');
+const { sequelize, Op, User, Friend } = require('../db');
 
 const router = express.Router();
 
@@ -36,15 +36,39 @@ router.get('/', function(req, res, next) {
 				})
 				.then((users) => {
 					let results = users.map(async (user, index) => {
-						let friend = await Friend.findOne({ where: { user_id: userID, friend_id: user.id  } });
+						let friend = await Friend.findOne({
+							attributes: [
+								'user_id',
+								'friend_id',
+								'blocked',
+								[sequelize.col('friendship.blocked'), "being_blocked"]
+							],
+							where: { 
+								user_id: userID, 
+								friend_id: user.id 
+							},
+							include: [
+								{
+									attributes: [],
+									model: Friend,
+									as: 'friendship',
+									require: false
+								}
+							],
+							raw: true
+						});
 						if (friend) {
 							if (friend.blocked === true) {
 								users[index].friended = "BLOCK";
 							} else {
-								users[index].friended = "YES"
+								if (friend.being_blocked === null) {
+									users[index].friended = "PENDING";
+								} else {
+									users[index].friended = "YES";
+								}
 							}
 						} else {
-							users[index].friended = "NO"
+							users[index].friended = "NO";
 						}
 					});
 					Promise.all(results).then((friends) => {

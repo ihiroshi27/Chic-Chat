@@ -84,10 +84,13 @@ class FriendList extends React.Component {
 										friend.friended === "NO" ?
 											<button onClick={ () => this.onAddFriend(friend.id) }><i className="fas fa-user-plus"></i> Add Friend</button>
 										:
-											friend.blocked === 1 ?
-												<button onClick={ () => this.onUnblock(friend.id) }><i className="fas fa-user-times"></i> Unblock</button>
+											friend.friended === "PENDING" ?
+												<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Cancel Request</button>
 											:
-												<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Unfriend</button>
+												friend.blocked === 1 ?
+													<button onClick={ () => this.onUnblock(friend.id) }><i className="fas fa-user-times"></i> Unblock</button>
+												:
+													<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Unfriend</button>
 									}
 								</div>
 							</div>

@@ -78,11 +78,21 @@ router.delete('/', function(req, res, next) {
 			if (userID === friendID) {
 				next(new Error('Invalid FriendID'));
 			} else {
-				Friend.destroy({ where: {
-					user_id: userID,
-					friend_id: friendID
-				}})
-				.then((result) => res.json({ result: "Complete" }))
+				Promise.all([
+					Friend.destroy({ where: {
+						user_id: userID,
+						friend_id: friendID,
+						blocked: false
+					}}),
+					Friend.destroy({ where: {
+						user_id: friendID,
+						friend_id: userID,
+						blocked: false
+					}})
+				])
+				.then((result) => {
+					res.json({ result: "Complete" });
+				})
 				.catch((err) => next(err));
 			}
 		})
