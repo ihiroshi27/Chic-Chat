@@ -1,7 +1,7 @@
 const express = require('express');
 
 const token = require('../token');
-const { Op, Chat } = require('../db');
+const { Op, Friend, Chat } = require('../db');
 
 const router = express.Router();
 
@@ -36,21 +36,37 @@ router.post('/', function(req, res, next) {
 		.then((user) => {
 			let userID = user.id;
 			let friendID = req.body.friendID;
-			let message = req.body.message;
 
-			Chat.create({
-				user_id1: userID,
-				user_id2: friendID,
-				message: message
+			Friend.findOne({ 
+				where: { 
+					user_id: friendID, 
+					friend_id: userID 
+				},
+				raw: true 
 			})
-			.then((result) => {
-				res.json({ result: "Complete" });
-
-				if (req.listener.forEach((listen) => {
-					if (listen.userID === friendID && listen.friendID === userID) {
-						req.io.to(listen.clientID).emit('new');
-					}
-				}));
+			.then((friend) => {
+				if (!friend) {
+					next(new Error("You are not his friend"));
+				} else if (friend.blocked) {
+					next(new Error("You have been blocked"));
+				} else {
+					const message = req.body.message;
+					Chat.create({
+						user_id1: userID,
+						user_id2: friendID,
+						message: message
+					})
+					.then((result) => {
+						res.json({ result: "Complete" });
+		
+						if (req.listener.forEach((listen) => {
+							if (listen.userID === friendID && listen.friendID === userID) {
+								req.io.to(listen.clientID).emit('new');
+							}
+						}));
+					})
+					.catch((err) => next(err));
+				}
 			})
 			.catch((err) => next(err));
 		})
