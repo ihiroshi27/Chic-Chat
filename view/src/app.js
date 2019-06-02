@@ -29,6 +29,7 @@ class App extends React.Component {
 			user_fetched: false,
 			user: {}
 		}
+		this.refetchFriend = function() { };
 	}
 	componentWillMount() {
 		this.fetchUser();

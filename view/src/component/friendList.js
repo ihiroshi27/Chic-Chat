@@ -24,7 +24,7 @@ class FriendList extends React.Component {
 			}
 		});
 	}
-	onUnfriend(friendID) {
+	onCancelFriend(friendID) {
 		fetch(API_URL + '/friend', {
 			method: 'DELETE',
 			headers: {
@@ -44,25 +44,32 @@ class FriendList extends React.Component {
 			}
 		});
 	}
+	onUnfriend = (friendID) => {
+		if (window.confirm("Are you sure you want to remove this person as your friend?")) {
+			this.onCancelFriend(friendID);
+		}
+	}
 	onUnblock(friendID) {
-		fetch(API_URL + '/friend/unblock', {
-			method: 'PUT',
-			headers: {
-				'Authorization': "Bearer " + localStorage.getItem("token"),
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				friendID: friendID
+		if (window.confirm("Are you sure you want to block this person?")) {
+			fetch(API_URL + '/friend/unblock', {
+				method: 'PUT',
+				headers: {
+					'Authorization': "Bearer " + localStorage.getItem("token"),
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					friendID: friendID
+				})
 			})
-		})
-		.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
-		.then((response) => {
-			if (response.status !== 200) {
-				alert(response.body.error);
-			} else {
-				this.props.refetch();
-			}
-		});
+			.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
+			.then((response) => {
+				if (response.status !== 200) {
+					alert(response.body.error);
+				} else {
+					this.props.refetch();
+				}
+			});
+		}
 	}
 	render() {
 		return (
@@ -85,7 +92,7 @@ class FriendList extends React.Component {
 											<button onClick={ () => this.onAddFriend(friend.id) }><i className="fas fa-user-plus"></i> Add Friend</button>
 										:
 											friend.friended === "PENDING" ?
-												<button onClick={ () => this.onUnfriend(friend.id) }><i className="fas fa-user-times"></i> Cancel Request</button>
+												<button onClick={ () => this.onCancelFriend(friend.id) }><i className="fas fa-user-times"></i> Cancel Request</button>
 											:
 												friend.blocked === 1 ?
 													<button onClick={ () => this.onUnblock(friend.id) }><i className="fas fa-user-times"></i> Unblock</button>

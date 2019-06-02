@@ -1,7 +1,7 @@
 const express = require('express');
 
 const token = require('../token');
-const { sequelize, User, Friend } = require('../db');
+const { sequelize, User, Friend, Notification } = require('../db');
 
 const router = express.Router();
 
@@ -28,14 +28,15 @@ router.get('/', function(req, res, next) {
 				raw: true
 			})
 			.then((friends) => {
-				let results = friends.map(async (friend, index) => {
+				let results = friends
+				.map(async (friend, index) => {
 					let user = await User.findOne({ where: { id: friend.friend_id } });
 					friends[index].id = user.id;
 					friends[index].name = user.name;
 					friends[index].profile = user.profile;
 				});
 				Promise.all(results).then((users) => {
-					res.json({ friends: friends });
+					res.json({ friends: friends.filter((friend) => friend.being_blocked !== null) });
 				});
 			})
 			.catch((err) => next(err));
@@ -49,17 +50,74 @@ router.post('/', function(req, res, next) {
 		next(new Error('Invalid Token'));
 	} else {
 		token.decode(req.headers.authorization.replace('Bearer ', ''))
-		.then((payload) => {
+		.then((user) => {
+			let userID = user.id;
 			let friendID = req.body.friendID;
 
-			if (payload.id === friendID) {
+			if (userID === friendID) {
 				next(new Error('Invalid FriendID'));
 			} else {
-				Friend.create({
-					user_id: payload.id,
-					friend_id: friendID
+				Friend.findOne({
+					where: {
+						user_id: friendID,
+						friend_id: userID,
+						blocked: true
+					}
 				})
-				.then((result) => res.json({ result: "Complete" }))
+				.then((friend) => {
+					if (friend) {
+						next(new Error('You have been blocked'));
+					} else {
+						Friend.findOne({
+							where: {
+								user_id: friendID,
+								friend_id: userID,
+								blocked: false
+							}
+						})
+						.then((friend) => {
+							if (friend) { // Accept Friend Request
+								Promise.all([
+									Friend.create({
+										user_id: userID,
+										friend_id: friendID
+									}),
+									Notification.destroy({
+										where: {
+											type: 'Request',
+											user_id: userID,
+											friend_id: friendID
+										}
+									})
+								])
+								.then((result) => res.json({ result: "Complete" }))
+								.catch((err) => next(err));
+							} else { // Send Friend Request
+								Promise.all([
+									Friend.create({
+										user_id: userID,
+										friend_id: friendID
+									}),
+									Notification.create({
+										type: 'Request',
+										user_id: friendID,
+										friend_id: userID
+									}),
+									Notification.destroy({
+										where: {
+											type: 'Request',
+											user_id: userID,
+											friend_id: friendID
+										}
+									})
+								])
+								.then((result) => res.json({ result: "Complete" }))
+								.catch((err) => next(err));
+							}
+						})
+						.catch((err) => next(err));
+					}
+				})
 				.catch((err) => next(err));
 			}
 		})
@@ -79,16 +137,34 @@ router.delete('/', function(req, res, next) {
 				next(new Error('Invalid FriendID'));
 			} else {
 				Promise.all([
-					Friend.destroy({ where: {
-						user_id: userID,
-						friend_id: friendID,
-						blocked: false
-					}}),
-					Friend.destroy({ where: {
-						user_id: friendID,
-						friend_id: userID,
-						blocked: false
-					}})
+					Friend.destroy({ 
+						where: {
+							user_id: userID,
+							friend_id: friendID,
+							blocked: false
+						}
+					}),
+					Friend.destroy({ 
+						where: {
+							user_id: friendID,
+							friend_id: userID,
+							blocked: false
+						}
+					}),
+					Notification.destroy({
+						where: {
+							type: 'Request',
+							user_id: friendID,
+							friend_id: userID
+						}
+					}),
+					Notification.destroy({
+						where: {
+							type: 'Request',
+							user_id: userID,
+							friend_id: friendID
+						}
+					})
 				])
 				.then((result) => {
 					res.json({ result: "Complete" });

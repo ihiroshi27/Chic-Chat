@@ -9,6 +9,7 @@ const search = require('./controller/search');
 const friend = require('./controller/friend');
 const chat = require('./controller/chat');
 const resetPassword = require('./controller/reset');
+const notification = require('./controller/notification');
 
 const app = express();
 app.enable('trust proxy');
@@ -57,6 +58,7 @@ app.use('/search', search);
 app.use('/friend', friend);
 app.use('/chat', chat);
 app.use('/reset', resetPassword);
+app.use('/notification', notification);
 app.use(function(err, req, res, next) {
 	console.log(err.stack);
 	res.status(500).json({ error: err.message });

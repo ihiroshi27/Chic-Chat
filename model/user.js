@@ -50,5 +50,8 @@ module.exports = (sequelize, dataTypes) => {
 			}
 		}
 	);
+	User.associate = (models) => {
+		User.belongsTo(models.Notification, { foreignKey: 'id', targetKey: 'friend_id' });
+	};
 	return User;
 }
