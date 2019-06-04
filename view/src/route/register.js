@@ -112,7 +112,7 @@ class Register extends React.Component {
 										<input name="citizen_id" type="text" pattern="[0-9]{13}" placeholder="Citizen ID" required />
 									</div>
 									<input name="latitude" type="hidden" value={ this.state.latitude } />
-									<input name="logitude" type="hidden" value={ this.state.longitude } />
+									<input name="longitude" type="hidden" value={ this.state.longitude } />
 									<input onChange={ this.onProfileChange } ref={ input => { this.file = input } } name="file" type="file" style={{ display: 'none' }} />
 									<button className="button full red" type="submit"><i className="far fa-check-circle"></i> Register</button>
 								</form>
