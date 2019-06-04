@@ -32,6 +32,7 @@ router.get('/', function(req, res, next) {
 					model: User,
 					as: 'friend'
 				}],
+				order: [["updated_at", "DESC"]],
 				raw: true
 			})
 			.then((notification) => {
@@ -50,7 +51,10 @@ router.put('/allread', function(req, res, next) {
 		token.decode(req.headers.authorization.replace('Bearer ', ''))
 		.then((user) => {
 			let userID = user.id;
-			Notification.update({ readed: true }, { where: { user_id: userID } })
+			Notification.update({ readed: true }, { 
+				where: { user_id: userID }, 
+				silent: true
+			})
 			.then((result) => {
 				res.json({ result: "Complete" });
 			})

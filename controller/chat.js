@@ -68,11 +68,16 @@ router.post('/', function(req, res, next) {
 					.then((result) => {
 						res.json({ result: "Complete" });
 		
-						if (req.listener.forEach((listen) => {
-							if (listen.userID === friendID && listen.friendID === userID) {
-								req.io.to(listen.clientID).emit('new');
+						req.socket.notification.listener.forEach((listen) => {
+							if (listen.listenerID === userID) {
+								req.socket.notification.io.to(listen.clientID).emit('update');
 							}
-						}));
+						});
+						req.socket.chat.listener.forEach((listen) => {
+							if (listen.listenerID === friendID && listen.friendID === userID) {
+								req.socket.chat.io.to(listen.clientID).emit('update');
+							}
+						});
 					})
 					.catch((err) => next(err));
 				}

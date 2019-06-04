@@ -7,7 +7,7 @@ import './home.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-let socket;
+let chatIO;
 let timeout;
 
 class Home extends React.Component {
@@ -74,13 +74,13 @@ class Home extends React.Component {
 		});
 	}
 	setListener = (friendID) => {
-		socket = io(API_URL);
-		socket.emit('info', {
+		chatIO = io(API_URL, { path: '/io/chat' });
+		chatIO.emit('info', {
 			userID: this.props.user.id,
 			friendID: friendID
 		});
-		socket.on('new', () => { this.fetchChat(friendID); });
-		socket.on('typing', (typing) => { this.setState({ typing: typing }); });
+		chatIO.on('update', () => { this.fetchChat(friendID); });
+		chatIO.on('typing', (typing) => { this.setState({ typing: typing }); });
 	}
 	onFriendChange = (friend) => {
 		this.setState({ 
@@ -93,14 +93,14 @@ class Home extends React.Component {
 		});
 	}
 	onMessageKeyUp = (event) => {
-		socket.emit('typing', { 
+		chatIO.emit('typing', { 
 			typing: true, 
 			userID: this.props.user.id,
 			friendID: this.state.friend.id 
 		});
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
-			socket.emit('typing', {
+			chatIO.emit('typing', {
 				typing: false,
 				userID: this.props.user.id,
 				friendID: this.state.friend.id

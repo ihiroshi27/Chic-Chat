@@ -12,19 +12,26 @@ router.get('/', function(req, res, next) {
 		token.decode(req.headers.authorization.replace('Bearer ', ''))
 		.then((payload) => {
 			Friend.findAll({
-				attributes: [ 'user_id', 'friend_id', [sequelize.col('friendship.blocked'), "being_blocked"] ],
-				where: { 
-					user_id: payload.id,
-					blocked: false
-				},
+				attributes: [
+					[sequelize.fn('DISTINCT', sequelize.col('friend.user_id')) ,'user_id'],
+					'friend_id', 
+					[sequelize.col('friendship.blocked'), "being_blocked"] 
+				],
 				include: [
 					{
 						attributes: [],
 						model: Friend,
 						as: 'friendship',
+						where: {
+							friend_id: payload.id
+						},
 						require: false
 					}
 				],
+				where: { 
+					user_id: payload.id,
+					blocked: false
+				},
 				raw: true
 			})
 			.then((friends) => {
@@ -111,7 +118,14 @@ router.post('/', function(req, res, next) {
 										}
 									})
 								])
-								.then((result) => res.json({ result: "Complete" }))
+								.then((result) => {
+									res.json({ result: "Complete" });
+									req.socket.notification.listener.forEach((listen) => {
+										if (listen.listenerID === friendID) {
+											req.socket.notification.io.to(listen.clientID).emit('update');
+										}
+									});
+								})
 								.catch((err) => next(err));
 							}
 						})
@@ -168,6 +182,11 @@ router.delete('/', function(req, res, next) {
 				])
 				.then((result) => {
 					res.json({ result: "Complete" });
+					req.socket.notification.listener.forEach((listen) => {
+						if (listen.listenerID === friendID) {
+							req.socket.notification.io.to(listen.clientID).emit('update');
+						}
+					});
 				})
 				.catch((err) => next(err));
 			}

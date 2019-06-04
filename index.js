@@ -15,35 +15,58 @@ const app = express();
 app.enable('trust proxy');
 
 const server = http.createServer(app);
-const io = require('socket.io')(server);
-let listener = [];
-io.on('connection', (client) => {
+const notificationIO = require('socket.io')(server, { path: '/io/notification' });
+let notificationListener = [];
+notificationIO.on('connection', (client) => {
 	client.on('info', function(data) {
-		listener.push({
+		notificationListener.push({
 			clientID: client.id,
-			userID: data.userID,
+			listenerID: data.userID
+		});
+	});
+	client.on('disconnect', function(data) {
+		notificationListener.filter((listener) => {
+			return listener.clientID === client.id;
+		});
+	});
+});
+const chatIO = require('socket.io')(server, { path: '/io/chat' });
+let chatListener = [];
+chatIO.on('connection', (client) => {
+	client.on('info', function(data) {
+		chatListener.push({
+			clientID: client.id,
+			listenerID: data.userID,
 			friendID: data.friendID
 		});
 	});
 	client.on('typing', function(data) {
-		listener.forEach((listen) => {
-			if (listen.userID === data.friendID && listen.friendID === data.userID) {
-				io.to(listen.clientID).emit('typing', data.typing);
+		chatListener.forEach((listen) => {
+			if (listen.listenerID === data.friendID && listen.friendID === data.userID) {
+				chatIO.to(listen.clientID).emit('typing', data.typing);
 			}
-		})
+		});
 	});
 	client.on('disconnect', function(data) {
-		listener.filter((listen) => {
-			return listen.userID === client.id
+		chatListener.filter((listen) => {
+			return listen.clientID === client.id
 		});
 	});
 });
+
 app.use(function(req, res, next) {
-	req.io = io;
-	req.listener = listener;
+	req.socket = {
+		notification: {
+			io: notificationIO,
+			listener: notificationListener
+		},
+		chat: {
+			io: chatIO,
+			listener: chatListener
+		}
+	}
 	next();
 });
-
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");

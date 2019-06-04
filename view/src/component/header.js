@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import io from 'socket.io-client';
 import './header.css';
 
-const API_URL = process.env.REACT_APP_API_URL;
+let notificationIO;
+let typingTimer;
 
-var typingTimer;
+const API_URL = process.env.REACT_APP_API_URL;
 const doneTypingInterval = 1000;
 
 class Header extends React.Component {
@@ -37,6 +39,7 @@ class Header extends React.Component {
 				});
 			}
 		});
+		this.setListener();
 		this.fetchNotification();
 	}
 	componentDidUpdate(prevProps, prevState) {
@@ -58,6 +61,15 @@ class Header extends React.Component {
 				}
 			}
 		}
+	}
+	setListener = () => {
+		notificationIO = io(API_URL, { path: '/io/notification' });
+		notificationIO.emit('info', {
+			userID: this.props.user.id
+		});
+		notificationIO.on('update', () => { 
+			this.fetchNotification();
+		});
 	}
 	fetchNotification = () => {
 		fetch(API_URL + '/notification', {
