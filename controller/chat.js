@@ -69,7 +69,7 @@ router.post('/', function(req, res, next) {
 						res.json({ result: "Complete" });
 		
 						req.socket.notification.listener.forEach((listen) => {
-							if (listen.listenerID === userID) {
+							if (listen.listenerID === friendID) {
 								req.socket.notification.io.to(listen.clientID).emit('update');
 							}
 						});
