@@ -58,27 +58,48 @@ router.post('/', upload.single('file'), function(req, res, next) {
 	if (req.body && req.file) {
 		req.body.password = bcrypt.hashSync(req.body.password, config.security.saltRounds);
 		req.body.profile = req.file.filename;
+
+		let latitude = req.body.latitude;
+		let longitude = req.body.longitude;
+		delete(req.body.latitude);
+		delete(req.body.longitude);
+
 		User.create(req.body)
 		.then((result) => {
 			token.encode({ id: result.id }, req.body.password)
 			.then((token) => {
-				let ip = req.ip;
-				getLocationFromIP(ip)
-				.then((location) => {
+				if (latitude && longitude) {
 					let login = {
 						user_id: result.id,
 						attempt: 'Success',
-						lat: location.latitude,
-						lng: location.longitude
+						lat: latitude,
+						lng: longitude
 					}
 					Login.create(login)
 					.then((result) => {
 						res.json({ token: token });
 					})
 					.catch((err) => next(err));
-				})
-				.catch((err) => next(err));
-			});
+				} else {
+					let ip = req.ip;
+					getLocationFromIP(ip)
+					.then((location) => {
+						let login = {
+							user_id: result.id,
+							attempt: 'Success',
+							lat: location.latitude,
+							lng: location.longitude
+						}
+						Login.create(login)
+						.then((result) => {
+							res.json({ token: token });
+						})
+						.catch((err) => next(err));
+					})
+					.catch((err) => next(err));
+				}
+			})
+			.catch((err) => next(err));
 		})
 		.catch((err) => next(err));
 	}

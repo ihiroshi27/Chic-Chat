@@ -11,7 +11,9 @@ class Login extends React.Component {
 		const attempt = localStorage.getItem("attempt") || 0;
 		this.state = {
 			isSubmitFormComplete: true,
-			isRecaptchaHidden: attempt < 3
+			isRecaptchaHidden: attempt < 3,
+			latitude: '',
+			longitude: ''
 		}
 	}
 	onSubmit = (event) => {
@@ -32,6 +34,8 @@ class Login extends React.Component {
 				body: JSON.stringify({
 					username: username,
 					password: password,
+					latitude: this.state.latitude,
+					longitude: this.state.longitude,
 					recaptcha: recaptcha
 				})
 			})
@@ -58,6 +62,15 @@ class Login extends React.Component {
 		const script = document.createElement('script')
 		script.src = 'https://www.google.com/recaptcha/api.js';
 		document.body.appendChild(script);
+
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				this.setState({
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude
+				});
+			});
+		}
 	}
 	render() {
 		return (

@@ -8,14 +8,24 @@ class Register extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			latitude: '',
+			longitude: '',
 			isSubmitFormComplete: true
+		}
+	}
+	componentDidMount() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				this.setState({
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude
+				});
+			});
 		}
 	}
 	onSubmit = (event) => {
 		event.preventDefault();
 		let target = event.target;
-		this.setState({ isSubmitFormComplete: false });
-
 		let file = target.file.value;
 		if (file === "") {
 			alert("Please upload an image");
@@ -26,6 +36,7 @@ class Register extends React.Component {
 			if (password !== re_password) {
 				alert("Password not match");
 			} else {
+				this.setState({ isSubmitFormComplete: false });
 				let formData = new FormData(target);
 				fetch(API_URL + '/user', {
 					method: 'POST',
@@ -100,6 +111,8 @@ class Register extends React.Component {
 										<i className="fas fa-id-card"></i>
 										<input name="citizen_id" type="text" pattern="[0-9]{13}" placeholder="Citizen ID" required />
 									</div>
+									<input name="latitude" type="hidden" value={ this.state.latitude } />
+									<input name="logitude" type="hidden" value={ this.state.longitude } />
 									<input onChange={ this.onProfileChange } ref={ input => { this.file = input } } name="file" type="file" style={{ display: 'none' }} />
 									<button className="button full red" type="submit"><i className="far fa-check-circle"></i> Register</button>
 								</form>
