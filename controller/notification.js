@@ -52,7 +52,10 @@ router.put('/allread', function(req, res, next) {
 		.then((user) => {
 			let userID = user.id;
 			Notification.update({ readed: true }, { 
-				where: { user_id: userID }, 
+				where: {
+					type: 'Message',
+					user_id: userID 
+				}, 
 				silent: true
 			})
 			.then((result) => {
