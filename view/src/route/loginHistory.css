@@ -15,6 +15,9 @@
 	overflow: hidden;
 	border-bottom: 4px solid #ee5253;
 }
+#login-history > .section > .body > .history {
+	overflow-x: scroll;
+}
 #login-history > .section > .body > .history > table {
 	width: 100%;
 	border-collapse: collapse;
@@ -38,13 +41,18 @@
 #login-history > .section > .body > .history > table > tbody > tr:nth-of-type(odd) > td {
 	background-color: #f7f7f7;
 }
+#login-history > .section > .body > .download {
+	float: left;
+	padding: 10px 30px;
+	text-align: center;
+}
+#login-history > .section > .body > .download > button.download {
+	font-size: 0.85em;
+}
 #login-history > .section > .body > .option {
+	float: right;
 	padding: 10px 30px;
 	text-align: right;
-}
-#login-history > .section > .body > .option > button.download {
-	float: left;
-	font-size: 0.85em;
 }
 #login-history > .section > .body > .option > label {
 	font-family: 'Prompt', sans-serif;
@@ -131,4 +139,28 @@
 }
 #login-history > #map > .close:hover {
 	cursor: pointer;
+}
+
+@media only screen and (max-width: 970px) {
+	#login-history > .section > .body > .download {
+		float: none;
+		padding-bottom: 0px;
+	}
+	#login-history > .section > .body > .option {
+		float: none;
+		text-align: center;
+		padding-top: 0px;
+	}
+	#login-history > .section > .body > .history > table > tbody > tr > th {
+		padding: 20px 10px;
+	}
+	#login-history > .section > .body > .history > table > tbody > tr > td {
+		padding: 10px 10px;
+	}
+	#login-history > .section > .body > .history > table > tbody > tr > td > button {
+		padding: 5px 15px;
+	}
+	#login-history > .section > .body > .history > table > tbody > tr > td > button > span {
+		display: none;
+	}
 }

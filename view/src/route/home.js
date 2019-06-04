@@ -14,6 +14,8 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isMobile: false,
+			isChatWrapperHidden: false,
 			friends_fetched: false,
 			friends: [],
 			friend: {},
@@ -25,6 +27,23 @@ class Home extends React.Component {
 	componentWillMount() {
 		this.fetchFriend();
 		this.props.refetchFriend(this.fetchFriend);
+	}
+	componentDidMount() {
+		window.addEventListener("resize", () => {
+			if (window.innerWidth < 970) {
+				this.setState({
+					isMobile: true,
+					isChatWrapperHidden: true,
+					friend: {}
+				});
+			} else if (this.state.isChatWrapperHidden === true) {
+				this.setState({
+					isMobile: false,
+					isChatWrapperHidden: false 
+				});
+			}
+		});
+		window.dispatchEvent(new Event('resize'));
 	}
 	fetchFriend = () => {
 		fetch(API_URL + "/friend", {
@@ -47,7 +66,7 @@ class Home extends React.Component {
 				this.setState({ 
 					friends_fetched: true,
 					friends: response.body.friends,
-					friend: response.body.friends[0]
+					friend: {}
 				}, () => {
 					this.fetchChat(this.state.friend.id);
 					this.setListener(this.state.friend.id);
@@ -91,6 +110,11 @@ class Home extends React.Component {
 			this.fetchChat(this.state.friend.id);
 			this.setListener(this.state.friend.id);
 		});
+		if (this.state.isMobile) {
+			this.setState({
+				isChatWrapperHidden: false
+			});
+		}
 	}
 	onMessageKeyUp = (event) => {
 		chatIO.emit('typing', { 
@@ -142,7 +166,7 @@ class Home extends React.Component {
 			return (
 				<div id="container">
 					<div id="home" className="wrapper">
-						<div className="friend-wrapper">
+						<div className="friend-wrapper" hidden={ this.state.isMobile && !this.state.isChatWrapperHidden }>
 							<FriendSelector 
 								friends={ this.state.friends }
 								friend={ this.state.friend }
@@ -150,8 +174,8 @@ class Home extends React.Component {
 								refetch={ this.fetchFriend }
 							/>
 						</div>
-						<div className="chat-wrapper">
-							<div className="header">{ this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
+						<div className="chat-wrapper" hidden={ this.state.isChatWrapperHidden }>
+							<div className="header"><button hidden={ !this.state.isMobile } onClick={ () => { this.setState({ isChatWrapperHidden: true, friend: {} }) } } ><i className="fas fa-angle-left"></i></button> { this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
 							<ChatList user={ this.props.user } friend={ this.state.friend } chat_fetched={ this.state.chat_fetched } chat={ this.state.chat } />
 							<div className="send-box">
 								<form onSubmit={ this.onSendMessage }>
@@ -161,7 +185,11 @@ class Home extends React.Component {
 										placeholder={ this.state.friend.being_blocked ? "You have been blocked" : "Type a message" }
 										autoComplete="off"
 										onKeyUp={ this.onMessageKeyUp }
-										disabled={ !this.state.chat_fetched || (this.state.friends.length === 0) || this.state.friend.being_blocked }
+										disabled={ 
+											!this.state.chat_fetched || 
+											(this.state.friends.length === 0) || 
+											this.state.friend.name === undefined ||
+											this.state.friend.being_blocked }
 										required
 									/>
 									<button type="submit" title="Send"><i className="fas fa-paper-plane"></i></button>

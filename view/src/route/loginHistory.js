@@ -74,7 +74,7 @@ class LoginHistory extends React.Component {
 										<tbody>
 											<tr>
 												<th>Datetime</th>
-												<th>Success/Failed</th>
+												<th>Attempt</th>
 												<th>Latitude</th>
 												<th>Longtitude</th>
 												<th>Map</th>
@@ -90,7 +90,7 @@ class LoginHistory extends React.Component {
 																<td style={{ color: history.attempt === "Success" ? "#8cb203" : '#d62e0c' }}>{ history.attempt }</td>
 																<td>{ history.lat }</td>
 																<td>{ history.lng }</td>
-																<td><button className="button grey-outset" onClick={ () => { this.onShowMap(history.lat, history.lng) } }><i className="fas fa-map-marked"></i> Show</button></td>
+																<td><button className="button grey-outset" onClick={ () => { this.onShowMap(history.lat, history.lng) } }><i className="fas fa-map-marked"></i> <span>Show</span></button></td>
 															</tr>
 														)
 													} else {
@@ -101,9 +101,11 @@ class LoginHistory extends React.Component {
 										</tbody>
 									</table>
 								</div>
-								<div className="option">
+								<div className="download">
 									<button onClick={ () => { this.onDownload('csv') } } className="download button grey-outset"><i className="fas fa-file-csv"></i> Download CSV</button>
 									<button onClick={ () => { this.onDownload('pdf') } } className="download button grey-outset"><i className="fas fa-file-pdf"></i> Download PDF</button>
+								</div>
+								<div className="option">
 									<label>Rows per page:</label>
 									<select onChange={ this.onRowsPerPageChange }>
 										<option value="10">10</option>

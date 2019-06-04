@@ -1,7 +1,6 @@
 #home {
 	height: 100%;
 	padding: 20px 0px;
-	box-sizing: border-box;
 }
 #home > .friend-wrapper {
 	float: left;
@@ -34,6 +33,23 @@
 	border-bottom: 1px solid #dddddd;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 	border-bottom: 2px solid #ca3839;
+	text-align: center;
+}
+#home > .chat-wrapper > .header > button {
+	float: left;
+	appearance: none;
+	padding: 0px;
+	margin: 0px;
+	font-size: 1.5em;
+	background: transparent;
+	border: 0px;
+	color: #fff;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	outline: none;
+	line-height: 50px;
+}
+#home > .chat-wrapper > .header > button:hover {
+	cursor: pointer;
 }
 #home > .chat-wrapper > .header > .typing {
 	font-weight: lighter;
@@ -84,4 +100,20 @@
 .chat-wrapper > .send-box > form > button:hover {
 	cursor: pointer;
 	color: #ee5253;
+}
+
+@media only screen and (max-width: 970px) {
+	#home {
+		height: 100%;
+		padding: 20px 10px;
+	}
+	#home > .friend-wrapper {
+		width: 100%;
+	}
+	#home > .chat-wrapper {
+		width: 100%;
+	}
+	#home > .chat-wrapper > .header {
+		padding: 0px 10px;
+	}
 }

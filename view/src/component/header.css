@@ -17,13 +17,13 @@
 	float: left;
 }
 #header > .wrapper > .search > form > .input-button {
-	width: 500px;
+	width: 600px;
 }
 #header > .wrapper > .search-list {
 	position: absolute;
 	top: 50px;
 	left: 0px;
-	width: 500px;
+	width: 600px;
 	height: 200px;
 	background-color: #fff;
 	border-radius: 4px;
@@ -293,4 +293,29 @@
 #header > .wrapper > .profile-option > button:hover {
 	cursor: pointer;
 	color: #ee5253;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 970px) {
+	#header > .wrapper > .search > form > .input-button {
+		width: 400px;
+	}
+	#header > .wrapper > .search-list {
+		width: 400px;
+		left: 10px;
+	}
+	#header > .wrapper > .notification-list {
+		right: 10px;
+	}
+}
+@media only screen and (max-width: 767px) {
+	#header > .wrapper > .search > form > .input-button {
+		width: 200px;
+	}
+	#header > .wrapper > .search-list {
+		width: calc(100% - 20px);
+		left: 10px;
+	}
+	#header > .wrapper > .notification-list {
+		right: 10px;
+	}
 }

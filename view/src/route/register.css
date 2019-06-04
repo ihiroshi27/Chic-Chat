@@ -67,3 +67,19 @@
 #register > .section > .body > .form > .title > a {
 	color: #ee5253;
 }
+
+@media only screen and (max-width: 767px) {
+	#register > .section > .body > .profile {
+		padding: 10px;
+	}
+	#register > .section > .body > .profile > .profile-img {
+		width: 100px;
+		height: 100px;
+	}
+	#register > .section > .body > .profile > .profile-img > i {
+		font-size: 90px;
+	}
+	#register > .section > .body > .form {
+		padding: 20px;
+	}
+}
