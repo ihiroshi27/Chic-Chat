@@ -68,8 +68,8 @@ class FriendSelector extends React.Component {
 								</div>
 								<div className="friend-name">{ friend.name }</div>
 								<div className="friend-option">
-									<button title="Unfriend" onClick={ (event) => { this.onUnfriend(event, friend.id) } }><i className="fas fa-user-times"></i></button>
 									<button title="Block" onClick={ (event) => { this.onBlock(event, friend.id) } }><i className="fas fa-user-slash"></i></button>
+									<button title="Unfriend" onClick={ (event) => { this.onUnfriend(event, friend.id) } }><i className="fas fa-user-times"></i></button>
 								</div>
 							</div>
 						)

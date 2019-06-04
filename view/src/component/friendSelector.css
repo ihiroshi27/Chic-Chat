@@ -85,6 +85,7 @@
 	color: #969696;
 	outline: none;
 	box-sizing: border-box;
+	margin-left: 0px;
 	margin-right: 10px;
 }
 #friend-selector > .friend > .friend-option > button:last-of-type {
