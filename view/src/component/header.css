@@ -111,6 +111,9 @@
 	border-left: 1px solid #e7e7e7;
 	margin-left: 15px;
 }
+#header > .wrapper > .notification.readed {
+	background-color: #dfdfdf;
+}
 #header > .wrapper > .notification > button {
 	appearance: none;
 	width: 50px;
@@ -204,6 +207,14 @@
 	font-size: 0.9em;
 	padding: 0px 10px;
 	margin-right: 5px;
+}
+#header > .wrapper > .notification-list > .notification > .message {
+	clear: both;
+	margin-left: 50px;
+	margin-top: 5px;
+	font-family: 'Prompt', sans-serif;
+	font-size: 0.9em;
+	color: #757575;
 }
 #header > .wrapper > .profile {
 	float: right;

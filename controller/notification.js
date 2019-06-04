@@ -19,6 +19,8 @@ router.get('/', function(req, res, next) {
 					'friend_id',
 					[sequelize.col('friend.name'), "friend_name"],
 					[sequelize.col('friend.profile'), "friend_profile"],
+					'message',
+					'readed',
 					'created_at',
 					'updated_at'
 				],
@@ -34,6 +36,23 @@ router.get('/', function(req, res, next) {
 			})
 			.then((notification) => {
 				res.json({ notification: notification });
+			})
+			.catch((err) => next(err));
+		})
+		.catch((err) => next(err));
+	}
+});
+
+router.put('/allread', function(req, res, next) {
+	if (typeof req.headers.authorization === "undefined") {
+		next(new Error('Invalid Token'));
+	} else {
+		token.decode(req.headers.authorization.replace('Bearer ', ''))
+		.then((user) => {
+			let userID = user.id;
+			Notification.update({ readed: true }, { where: { user_id: userID } })
+			.then((result) => {
+				res.json({ result: "Complete" });
 			})
 			.catch((err) => next(err));
 		})

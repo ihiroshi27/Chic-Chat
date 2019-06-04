@@ -1,7 +1,7 @@
 const express = require('express');
 
 const token = require('../token');
-const { Op, Friend, Chat } = require('../db');
+const { Op, Friend, Chat, Notification } = require('../db');
 
 const router = express.Router();
 
@@ -51,11 +51,20 @@ router.post('/', function(req, res, next) {
 					next(new Error("You have been blocked"));
 				} else {
 					const message = req.body.message;
-					Chat.create({
-						user_id1: userID,
-						user_id2: friendID,
-						message: message
-					})
+					Promise.all([
+						Chat.create({
+							user_id1: userID,
+							user_id2: friendID,
+							message: message
+						}),
+						Notification.upsert({
+							type: 'Message',
+							user_id: friendID,
+							friend_id: userID,
+							message: message,
+							readed: false
+						})
+					])
 					.then((result) => {
 						res.json({ result: "Complete" });
 		

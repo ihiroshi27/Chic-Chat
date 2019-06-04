@@ -8,7 +8,7 @@
   - `CREATE TABLE friend (user_id INT NOT NULL, friend_id INT NOT NULL, blocked BOOLEAN DEFAULT false, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (user_id, friend_id), FOREIGN KEY (user_id) REFERENCES user(id), FOREIGN KEY (friend_id) REFERENCES user(id));`
   - `CREATE TABLE reset (token TEXT NOT NULL, user_id INT NOT NULL, email VARCHAR(255) NOT NULL, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (user_id) REFERENCES user(id));`
   - `CREATE TABLE chat (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, user_id1 INT NOT NULL, user_id2 INT NOT NULL, message TEXT NOT NULL, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (user_id1) REFERENCES user(id), FOREIGN KEY (user_id2) REFERENCES user(id));`
-  - `CREATE TABLE notification (type ENUM('Request','Message') NOT NULL, user_id INT NOT NULL, friend_id INT NOT NULL, message TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(type, user_id, friend_id), FOREIGN KEY (user_id) REFERENCES user(id), FOREIGN KEY (friend_id) REFERENCES user(id));`
+  - `CREATE TABLE notification (type ENUM('Request','Message') NOT NULL, user_id INT NOT NULL, friend_id INT NOT NULL, message TEXT, readed BOOLEAN DEFAULT FALSE, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(type, user_id, friend_id), FOREIGN KEY (user_id) REFERENCES user(id), FOREIGN KEY (friend_id) REFERENCES user(id));`
 
 - `npm install` at **root directory** and **view directory**
 

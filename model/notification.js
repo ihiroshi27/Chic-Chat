@@ -20,6 +20,10 @@ module.exports = (sequelize, dataTypes) => {
 			message: {
 				type: dataTypes.TEXT
 			},
+			readed: {
+				type: dataTypes.BOOLEAN,
+				defaultValue: false
+			},
 			createdAt: {
 				field: 'created_at',
 				type: dataTypes.DATE,

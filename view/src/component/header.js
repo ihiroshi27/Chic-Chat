@@ -17,6 +17,7 @@ class Header extends React.Component {
 			friends_fetched: true,
 			friends: [],
 			notification_fetched: false,
+			notification_unread: 0,
 			notification: []
 		}
 	}
@@ -38,6 +39,26 @@ class Header extends React.Component {
 		});
 		this.fetchNotification();
 	}
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.isNotificationListHidden !== this.state.isNotificationListHidden) {
+			if (this.state.isNotificationListHidden) {
+				this.fetchNotification();
+			} else {
+				if (this.state.notification_unread !== 0) {
+					fetch(API_URL + '/notification/allread', {
+						method: 'PUT',
+						headers: {
+							'Authorization': "Bearer " + localStorage.getItem("token")
+						}
+					})
+					.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
+					.then((response) => {
+						console.log(response);
+					});
+				}
+			}
+		}
+	}
 	fetchNotification = () => {
 		fetch(API_URL + '/notification', {
 			method: 'GET',
@@ -49,6 +70,7 @@ class Header extends React.Component {
 		.then((response) => {
 			this.setState({
 				notification_fetched: true,
+				notification_unread: response.body.notification.filter((notification) => !notification.readed).length,
 				notification: response.body.notification
 			});
 		});
@@ -235,8 +257,8 @@ class Header extends React.Component {
 						}
 					</div>
 					<div id="notification" className="notification">
-						<button onClick={ () => { this.setState({ isNotificationListHidden: !this.state.isNotificationListHidden, showProfileOption: false }) } }><i className="fas fa-bell"></i></button>
-						<span>{ this.state.notification.length }</span>
+						<button onClick={ () => { this.setState({ isNotificationListHidden: !this.state.isNotificationListHidden, showProfileOption: false }); } }><i className="fas fa-bell"></i></button>
+						<span hidden={ this.state.notification_unread === 0 }>{ this.state.notification_unread }</span>
 					</div>
 					<div id="notification-list" className="notification-list" hidden={ this.state.isNotificationListHidden }>
 						{
@@ -249,7 +271,7 @@ class Header extends React.Component {
 									this.state.notification.map((notification, index) => {
 										return (
 											notification.type === "Request" ?
-													<div className="notification" key={ index }>
+													<div className={ "notification" + (notification.readed ? " readed": "") } key={ index }>
 														<div className="profile-img-wrapper">
 															<img src={ API_URL + '/static/' + notification.friend_profile } alt={ notification.friend_name } />
 														</div>
@@ -260,7 +282,13 @@ class Header extends React.Component {
 														</div>
 													</div>
 												:
-													null
+													<div className={ "notification" + (notification.readed ? " readed": "") } key={ index }>
+														<div className="profile-img-wrapper">
+															<img src={ API_URL + '/static/' + notification.friend_profile } alt={ notification.friend_name } />
+														</div>
+														<div className="title">{ notification.friend_name } <span>has sent you a message</span></div>
+														<div className="message"><i className="fas fa-comment"></i> { notification.message }</div>
+													</div>
 										)
 									})
 						}
