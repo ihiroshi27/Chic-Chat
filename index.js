@@ -53,9 +53,15 @@ chatIO.on('connection', (client) => {
 		});
 	});
 });
-
 app.use(function(req, res, next) {
-	req.socket = {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	next();
+});
+app.use(bodyParser.json());
+app.use(function(req, res, next) {
+	req.socketIO = {
 		notification: {
 			io: notificationIO,
 			listener: notificationListener
@@ -67,13 +73,6 @@ app.use(function(req, res, next) {
 	}
 	next();
 });
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-	next();
-});
-app.use(bodyParser.json());
 app.use('/static', express.static('uploads'));
 app.use('/authentication', authentication);
 app.use('/user', user);

@@ -120,9 +120,9 @@ router.post('/', function(req, res, next) {
 								])
 								.then((result) => {
 									res.json({ result: "Complete" });
-									req.socket.notification.listener.forEach((listen) => {
+									req.socketIO.notification.listener.forEach((listen) => {
 										if (listen.listenerID === friendID) {
-											req.socket.notification.io.to(listen.clientID).emit('update');
+											req.socketIO.notification.io.to(listen.clientID).emit('update');
 										}
 									});
 								})
@@ -182,9 +182,9 @@ router.delete('/', function(req, res, next) {
 				])
 				.then((result) => {
 					res.json({ result: "Complete" });
-					req.socket.notification.listener.forEach((listen) => {
+					req.socketIO.notification.listener.forEach((listen) => {
 						if (listen.listenerID === friendID) {
-							req.socket.notification.io.to(listen.clientID).emit('update');
+							req.socketIO.notification.io.to(listen.clientID).emit('update');
 						}
 					});
 				})
