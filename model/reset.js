@@ -1,6 +1,6 @@
 module.exports = (sequelize, dataTypes) => {
 	const Reset = sequelize.define(
-	   'Reset',
+	   'reset',
 	   {
 			token: {
 				type: dataTypes.TEXT,

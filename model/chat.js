@@ -1,6 +1,6 @@
 module.exports = (sequelize, dataTypes) => {
 	const Chat = sequelize.define(
-		'Chat',
+		'chat',
 		{
 			id: {
 				type: dataTypes.INTEGER,

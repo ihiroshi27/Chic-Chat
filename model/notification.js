@@ -1,6 +1,6 @@
 module.exports = (sequelize, dataTypes) => {
 	const Notification = sequelize.define(
-		'Notification',
+		'notification',
 		{
 			type: {
 				type: dataTypes.ENUM(["Request", "Message"]),
