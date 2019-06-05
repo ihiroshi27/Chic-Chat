@@ -80,3 +80,30 @@
 	border-radius: 10px;
 	color: #818181;
 }
+
+@media only screen and (max-width: 767px) {
+	#friend-list > .friend {
+		padding: 10px;
+	}
+	#friend-list > .friend > .friend-img-wrapper {
+		width: 60px;
+		height: 60px;
+		margin-right: 10px;
+	}
+	#friend-list > .friend > .friend-profile {
+		padding: 10px 0px;
+		line-height: 1.2;
+	}
+	#friend-list > .friend > .friend-profile > .friend-profile-name {
+		width: 130px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	#friend-list > .friend > .friend-option {
+		margin-top: 10px;
+	}
+	#friend-list > .friend > .friend-option > button > i {
+		display: none;
+	}
+}
