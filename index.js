@@ -15,6 +15,8 @@ const app = express();
 app.enable('trust proxy');
 
 const server = http.createServer(app);
+const PORT = process.env.PORT || config.app.port;
+
 const notificationIO = require('socket.io')(server, { path: '/io/notification' });
 let notificationListener = [];
 notificationIO.on('connection', (client) => {
@@ -89,4 +91,4 @@ app.use(function(err, req, res, next) {
 	res.status(500).json({ error: err.message });
 });
 
-server.listen(config.app.port, config.app.hostname);
+server.listen(PORT, config.app.hostname);
