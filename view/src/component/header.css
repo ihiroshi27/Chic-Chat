@@ -318,4 +318,10 @@
 	#header > .wrapper > .notification-list {
 		right: 10px;
 	}
+	#header > .wrapper > .profile > .profile-img-wrapper {
+		margin-right: 10px;
+	}
+	#header > .wrapper > .profile > .profile-name {
+		display: none;
+	}
 }
