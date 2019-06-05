@@ -1,29 +1,28 @@
-const config = {
-	app: {
-		hostname: '0.0.0.0',
-		port: 8082
-	},
-	security: {
-		expiredDate: 30,
-		secret: "secretkey",
-		saltRounds: 10
-	},
-	recaptcha: {
-		secret: ""
-	},
-	db: {
-		host: "localhost",
-		user: "root",
-		password: "",
-		database: "chic_chat"
-	},
-	mail: {
-		service: '',
-		auth: {
-			user: '',
-			pass: ''
-		}
-	}
-}
+let config = {};
+
+config.app = {};
+config.security = {};
+config.recaptcha = {};
+config.db = {};
+config.mail = {};
+
+config.app.hostname = "0.0.0.0";
+config.app.port = 8082;
+
+config.security.expiredDate = 30;
+config.security.secret = "secretkey";
+config.security.saltRounds = 10;
+
+config.recaptcha.secret = "";
+
+config.db.host = "localhost";
+config.db.user = "root";
+config.db.password = "";
+config.db.database = "chic_chat";
+
+config.mail.service = "";
+config.mail.auth = {};
+config.mail.auth.user = "";
+config.mail.auth.pass = "";
 
 module.exports = config;
