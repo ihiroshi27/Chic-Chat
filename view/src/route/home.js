@@ -20,9 +20,24 @@ class Home extends React.Component {
 			friends_fetched: false,
 			friends: [],
 			friend: {},
-			chat_fetched: false,
+			chat_fetched: true,
 			chat: [],
 			typing: false
+		}
+	}
+	componentWillReceiveProps(props) {
+		let friendID = props.location.state.friendID;
+		if (friendID) {
+			this.state.friends.forEach((friend) => {
+				if (friend.friend_id === friendID) {
+					this.setState({
+						friend: friend,
+						chat_fetched: false
+					}, () => {
+						this.fetchChat(friendID);
+					});
+				}
+			})
 		}
 	}
 	componentWillMount() {
@@ -59,19 +74,40 @@ class Home extends React.Component {
 				this.setState({
 					friends_fetched: true,
 					friends: [],
-					friend: {},
-					chat_fetched: true,
-					chat: []
+					friend: {}
 				});
 			} else {
-				this.setState({ 
-					friends_fetched: true,
-					friends: response.body.friends,
-					friend: {}
-				}, () => {
-					this.fetchChat(this.state.friend.id);
-					this.setListener(this.state.friend.id);
-				});
+				let friendID = this.props.location.state ? this.props.location.state.friendID : false;
+				if (friendID) {
+					response.body.friends.forEach((friend) => {
+						if (friend.friend_id === friendID) {
+							this.setState({ 
+								friends_fetched: true,
+								friends: response.body.friends,
+								friend: friend,
+								chat_fetched: false,
+								chat: []
+							}, () => {
+								this.fetchChat(friendID);
+								this.setListener(friendID);
+							});
+						} else {
+							this.setState({ 
+								friends_fetched: true,
+								friends: response.body.friends,
+								friend: {}
+							});
+						}
+					})
+				} else {
+					this.setState({ 
+						friends_fetched: true,
+						friends: response.body.friends,
+						friend: {},
+						chat_fetched: true,
+						chat: []
+					});
+				}
 			}
 		});
 	}

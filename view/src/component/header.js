@@ -57,7 +57,7 @@ class Header extends React.Component {
 					})
 					.then((response) => response.json().then((body) => ({ status: response.status, body: body })))
 					.then((response) => {
-						console.log(response);
+						
 					});
 				}
 			}
@@ -295,13 +295,13 @@ class Header extends React.Component {
 														</div>
 													</div>
 												:
-													<div className={ "notification" + (notification.readed ? " readed": "") } key={ index }>
+													<Link to={{ pathname: '/', state: { friendID: notification.friend_id } }} className={ "notification" + (notification.readed ? " readed": "") } key={ index }>
 														<div className="profile-img-wrapper">
 															<img src={ API_URL + '/static/' + notification.friend_profile } alt={ notification.friend_name } />
 														</div>
 														<div className="title">{ notification.friend_name } <span>has sent you a message</span></div>
 														<div className="message"><i className="fas fa-comment"></i> { notification.message }</div>
-													</div>
+													</Link>
 										)
 									})
 						}
