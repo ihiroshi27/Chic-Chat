@@ -104,7 +104,7 @@ class Header extends React.Component {
 		}
 	}
 	fetchSearch = (query) => {
-		fetch(API_URL + "/search?q=" + query, {
+		fetch(API_URL + "/user/search?q=" + query, {
 			method: 'GET',
 			headers: {
 				'Authorization': "Bearer " + localStorage.getItem("token")

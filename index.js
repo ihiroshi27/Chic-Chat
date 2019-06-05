@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const http = require('http');
+const path = require('path');
 
 const config = require('./config');
 const authentication = require('./controller/authentication');
 const user = require('./controller/user');
-const search = require('./controller/search');
 const friend = require('./controller/friend');
 const chat = require('./controller/chat');
 const resetPassword = require('./controller/reset');
@@ -73,14 +73,17 @@ app.use(function(req, res, next) {
 	}
 	next();
 });
-app.use('/static', express.static('uploads'));
-app.use('/authentication', authentication);
-app.use('/user', user);
-app.use('/search', search);
-app.use('/friend', friend);
-app.use('/chat', chat);
-app.use('/reset', resetPassword);
-app.use('/notification', notification);
+app.use('/api/static', express.static('uploads'));
+app.use('/api/authentication', authentication);
+app.use('/api/user', user);
+app.use('/api/friend', friend);
+app.use('/api/chat', chat);
+app.use('/api/reset-password', resetPassword);
+app.use('/api/notification', notification);
+app.use(express.static(path.join(__dirname, 'view', 'build')));
+app.use(function(req, res, next) {
+	res.sendFile(path.join(__dirname, 'view', 'build', 'index.html'));
+});
 app.use(function(err, req, res, next) {
 	console.log(err.stack);
 	res.status(500).json({ error: err.message });

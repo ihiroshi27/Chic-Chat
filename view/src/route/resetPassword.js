@@ -14,7 +14,7 @@ class ResetPassword extends React.Component {
 	componentWillMount() {
 		const params = new URLSearchParams(this.props.location.search); 
 		const token = params.get('token');
-		fetch(API_URL + '/reset/' + token)
+		fetch(API_URL + '/reset-password/' + token)
 		.then(response => response.json().then(body => ({ status: response.status, body: body })))
 		.then(response => {
 			if (response.status !== 200) {
@@ -33,7 +33,7 @@ class ResetPassword extends React.Component {
 			this.setState({ isSubmitFormComplete: false });
 			const params = new URLSearchParams(this.props.location.search); 
 			const token = params.get('token');
-			fetch(API_URL + '/reset/' + token, {
+			fetch(API_URL + '/reset-password/' + token, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'

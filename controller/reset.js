@@ -43,7 +43,7 @@ router.post('/', function(req, res, next) {
 				ejs.renderFile(__dirname + "/../template/passwordResetEmail.ejs", {
 					name: user.name,
 					email: email,
-					link: config.view.url + '/reset-password?token=' + resetToken
+					link: req.protocol + '://' + req.get('host') + '/reset-password?token=' + resetToken
 				}, (err, html) => {
 					if (err) next(err);
 					else {

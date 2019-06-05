@@ -1,10 +1,7 @@
 const config = {
 	app: {
 		hostname: '0.0.0.0',
-		port: 8080
-	},
-	view: {
-		url: "http://localhost:3000"
+		port: 8082
 	},
 	security: {
 		expiredDate: 30,

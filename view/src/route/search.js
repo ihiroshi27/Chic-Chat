@@ -19,7 +19,7 @@ class Search extends React.Component {
 		this.fetchFriend();
 	}
 	fetchFriend = () => {
-		fetch(API_URL + "/search?q=" + new URLSearchParams(this.props.location.search).get("q"), {
+		fetch(API_URL + "/user/search?q=" + new URLSearchParams(this.props.location.search).get("q"), {
 			method: 'GET',
 			headers: {
 				'Authorization': "Bearer " + localStorage.getItem("token")
