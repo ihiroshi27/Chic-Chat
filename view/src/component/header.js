@@ -6,6 +6,7 @@ import './header.css';
 let notificationIO;
 let typingTimer;
 
+const IO_URL = process.env.REACT_APP_IO_URL;
 const API_URL = process.env.REACT_APP_API_URL;
 const doneTypingInterval = 1000;
 
@@ -63,7 +64,7 @@ class Header extends React.Component {
 		}
 	}
 	setListener = () => {
-		notificationIO = io(API_URL, { path: '/io/notification' });
+		notificationIO = io(IO_URL, { path: '/io/notification' });
 		notificationIO.emit('info', {
 			userID: this.props.user.id
 		});

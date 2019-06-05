@@ -5,6 +5,7 @@ import FriendSelector from '../component/friendSelector';
 import ChatList from '../component/chatList';
 import './home.css';
 
+const IO_URL = process.env.REACT_APP_IO_URL;
 const API_URL = process.env.REACT_APP_API_URL;
 
 let chatIO;
@@ -93,7 +94,7 @@ class Home extends React.Component {
 		});
 	}
 	setListener = (friendID) => {
-		chatIO = io(API_URL, { path: '/io/chat' });
+		chatIO = io(IO_URL, { path: '/io/chat' });
 		chatIO.emit('info', {
 			userID: this.props.user.id,
 			friendID: friendID
