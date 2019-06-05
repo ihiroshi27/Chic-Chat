@@ -6,7 +6,7 @@ const PDFDocument = require('pdfkit');
 
 const config = require('../config');
 const token = require('../token');
-const { sequelize, Op, User, Friend } = require('../db');
+const { sequelize, Op, User, Login, Friend } = require('../db');
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
