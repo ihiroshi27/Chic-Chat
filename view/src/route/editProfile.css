@@ -55,3 +55,10 @@
 	background-color: #fff;
 	padding: 30px;
 }
+
+@media only screen and (max-width: 767px) {
+	#edit-profile > .section > .body > .profile > .profile-img {
+		width: 100px;
+		height: 100px;
+	}
+}
