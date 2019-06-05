@@ -15,7 +15,7 @@ class ResetPassword extends React.Component {
 		event.preventDefault();
 		let email = event.target.email.value;
 		this.setState({ isSubmitFormComplete: false });
-		fetch(API_URL + '/reset', {
+		fetch(API_URL + '/reset-password', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

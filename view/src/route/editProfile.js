@@ -49,7 +49,7 @@ class EditProfile extends React.Component {
 	}
 	onResetPassword = () => {
 		this.setState({ isSubmitFormComplete: false });
-		fetch(API_URL + '/reset', {
+		fetch(API_URL + '/reset-password', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
