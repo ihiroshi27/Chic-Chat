@@ -113,8 +113,10 @@ class LoginHistory extends React.Component {
 										<option value="100">100</option>
 									</select>
 									<span>{ (this.state.current_page * this.state.rows_per_page) - this.state.rows_per_page + 1 } - { this.state.current_page * this.state.rows_per_page } of { this.state.history.length }</span>
-									<button className="navigator" onClick={ this.onPreviousPage } disabled={ this.state.current_page === 1 }><i className="fas fa-chevron-left"></i></button>
-									<button className="navigator" onClick={ this.onNextPage} disabled={ this.state.current_page * this.state.rows_per_page >= this.state.history.length }><i className="fas fa-chevron-right"></i></button>
+									<div className="navigator_wrapper">
+										<button className="navigator" onClick={ this.onPreviousPage } disabled={ this.state.current_page === 1 }><i className="fas fa-chevron-left"></i></button>
+										<button className="navigator" onClick={ this.onNextPage} disabled={ this.state.current_page * this.state.rows_per_page >= this.state.history.length }><i className="fas fa-chevron-right"></i></button>
+									</div>
 								</div>
 							</div>
 						</div>

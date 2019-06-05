@@ -84,7 +84,11 @@
 	color: #8b8b8b;
 	padding: 0px 20px;
 }
-#login-history > .section > .body > .option > button.navigator {
+#login-history > .section > .body > .option > .navigator_wrapper {
+	float: right;
+	line-height: 50px;
+}
+#login-history > .section > .body > .option > .navigator_wrapper > .navigator {
 	font-size: 0.9em;
 	padding-left: 15px;
 	border: none;
@@ -92,13 +96,13 @@
 	background: transparent;
 	outline: none;
 }
-#login-history > .section > .body > .option > button.navigator:hover {
+#login-history > .section > .body > .option > .navigator_wrapper > .navigator:hover {
 	cursor: pointer;
 }
-#login-history > .section > .body > .option > button.navigator:disabled:hover {
+#login-history > .section > .body > .option > .navigator_wrapper > .navigator:disabled:hover {
 	cursor: default;
 }
-#login-history > .section > .body > .option > button.navigator:disabled {
+#login-history > .section > .body > .option > .navigator_wrapper > .navigator:disabled {
 	color: #c0c0c0;
 }
 #login-history > #map {
@@ -162,5 +166,9 @@
 	}
 	#login-history > .section > .body > .history > table > tbody > tr > td > button > span {
 		display: none;
+	}
+	#login-history > .section > .body > .option > .navigator_wrapper {
+		float: none;
+		line-height: 20px;
 	}
 }
