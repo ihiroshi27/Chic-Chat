@@ -295,7 +295,7 @@ class Header extends React.Component {
 														</div>
 													</div>
 												:
-													<Link to={{ pathname: '/', state: { friendID: notification.friend_id } }} className={ "notification" + (notification.readed ? " readed": "") } key={ index }>
+													<Link to={{ pathname: '/', state: { friendID: notification.friend_id } }} onClick={ () => { this.setState({ isNotificationListHidden: true }) } } className={ "notification" + (notification.readed ? " readed": "") } key={ index }>
 														<div className="profile-img-wrapper">
 															<img src={ API_URL + '/static/' + notification.friend_profile } alt={ notification.friend_name } />
 														</div>
