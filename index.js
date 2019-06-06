@@ -88,7 +88,8 @@ app.use(function(req, res, next) {
 });
 app.use(function(err, req, res, next) {
 	console.log(err.stack);
-	res.status(500).json({ error: err.message });
+	if (err.parent) console.log(err.parent);
+	res.status(500).json({ error: err.parent ? err.parent.message : err.message });
 });
 
 server.listen(PORT, config.app.hostname);
