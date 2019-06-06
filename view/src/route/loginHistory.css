@@ -120,7 +120,7 @@
 	height: 100%;
 }
 #login-history > #map > iframe {
-	position: absolute;
+	position: relative;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -132,6 +132,7 @@
 	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
 	padding: 15px;
 	box-sizing: border-box;
+	z-index: 1;
 }
 #login-history > #map > .close {
 	position: absolute;
@@ -140,6 +141,7 @@
 	transform: translate(330px, -260px);
 	font-size: 30px;
 	color: #3d3d3d;
+	z-index: 2;
 }
 #login-history > #map > .close:hover {
 	cursor: pointer;
@@ -170,5 +172,21 @@
 	#login-history > .section > .body > .option > .navigator_wrapper {
 		float: none;
 		line-height: 20px;
+	}
+}
+@media only screen and (max-width: 767px) {
+	#login-history > #map {
+		padding: 15px;
+		box-sizing: border-box;
+	}
+	#login-history > #map > iframe {
+		width: 100%;
+	}
+	#login-history > #map > .close {
+		position: absolute;
+		top: 50%;
+		left: auto;
+		right: 5px;
+		transform: translateY(-260px);
 	}
 }
