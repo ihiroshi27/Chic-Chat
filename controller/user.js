@@ -28,8 +28,12 @@ function getLocationFromIP(ip) {
 				chunks.push(chunk);
 			});
 			res.on("end", function () {
-				var body = JSON.parse(Buffer.concat(chunks));
-				resolve(body);
+				try {
+					let body = JSON.parse(Buffer.concat(chunks));
+					resolve(body);
+				} catch (err) {
+					reject(err);
+				}
 			});
 		});
 		request.on("error", (err) => { reject(err) })
