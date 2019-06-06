@@ -57,8 +57,14 @@
 }
 
 @media only screen and (max-width: 767px) {
+	#edit-profile > .section > .body > .profile {
+		padding: 5px;
+	}
 	#edit-profile > .section > .body > .profile > .profile-img {
 		width: 100px;
 		height: 100px;
+	}
+	#edit-profile > .section > .body > .form {
+		padding: 15px;
 	}
 }
