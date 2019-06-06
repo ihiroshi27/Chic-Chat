@@ -10,14 +10,16 @@
   - `CREATE TABLE chat (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, user_id1 INT NOT NULL, user_id2 INT NOT NULL, message TEXT NOT NULL, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (user_id1) REFERENCES user(id), FOREIGN KEY (user_id2) REFERENCES user(id));`
   - `CREATE TABLE notification (type ENUM('Request','Message') NOT NULL, user_id INT NOT NULL, friend_id INT NOT NULL, message TEXT, readed BOOLEAN DEFAULT FALSE, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(type, user_id, friend_id), FOREIGN KEY (user_id) REFERENCES user(id), FOREIGN KEY (friend_id) REFERENCES user(id));`
 
-- `npm install` at **root directory** and **view directory**
-
 ## Configuration
 You need to configure a **MySQL, Nodemailer** and **reCAPTCHA v2**
 - Back-end configuration will located in **config.js** at **root directory**
 - Front-end configuration will located in **.env** at **view directory**
 
+## Installation
+- `npm install`
+- `npm run build`
+
 ## Running
-- `npm start` at **root directory** and **view directory**
+- `npm start` at **root directory**
 
 **Back-end** will run on port **8080** and **Front-end** will run on port **3000**
