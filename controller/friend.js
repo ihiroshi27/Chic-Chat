@@ -167,14 +167,12 @@ router.delete('/', function(req, res, next) {
 					}),
 					Notification.destroy({
 						where: {
-							type: 'Request',
 							user_id: friendID,
 							friend_id: userID
 						}
 					}),
 					Notification.destroy({
 						where: {
-							type: 'Request',
 							user_id: userID,
 							friend_id: friendID
 						}
