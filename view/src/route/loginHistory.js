@@ -34,7 +34,7 @@ class LoginHistory extends React.Component {
 		});
 	}
 	onShowMap = (lat, lng) => {
-		this.map.src = `http://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+		this.map.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
 		this.setState({ isMapHidden: false });
 	}
 	onRowsPerPageChange = (event) => {
