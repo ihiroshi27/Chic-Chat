@@ -26,6 +26,6 @@ module.exports = (sequelize, dataTypes) => {
 			}
 		}
 	);
-	Friend.hasOne(Friend, { foreignKey: 'friend_id', sourceKey: 'user_id', as: 'friendship' })
+	Friend.hasOne(Friend, { foreignKey: 'user_id', sourceKey: 'friend_id', as: 'friendship' })
 	return Friend;
 }

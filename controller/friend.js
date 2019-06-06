@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 		.then((payload) => {
 			Friend.findAll({
 				attributes: [
-					[sequelize.fn('DISTINCT', sequelize.col('friend.user_id')) ,'user_id'],
+					'user_id',
 					'friend_id', 
 					[sequelize.col('friendship.blocked'), "being_blocked"] 
 				],
