@@ -15,9 +15,7 @@ You need to configure a **MySQL, Nodemailer** and **reCAPTCHA v2**
 - Back-end configuration will located in **config.js** at **root directory**
 - Front-end configuration will located in **.env** at **view directory**
 
-## Installation
+## Running
 - `npm install`
 - `npm run build`
-
-## Running
 - `npm start`
