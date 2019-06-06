@@ -65,8 +65,10 @@ class Header extends React.Component {
 	}
 	setListener = () => {
 		notificationIO = io(IO_URL, { path: '/io/notification' });
-		notificationIO.emit('info', {
-			userID: this.props.user.id
+		notificationIO.on('connect', () => {
+			notificationIO.emit('info', {
+				userID: this.props.user.id
+			});
 		});
 		notificationIO.on('update', () => { 
 			this.fetchNotification();
