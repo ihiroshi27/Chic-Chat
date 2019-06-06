@@ -40,18 +40,18 @@ class Home extends React.Component {
 			})
 		}
 	}
-	componentWillMount() {
+	componentDidMount() {
 		this.fetchFriend();
 		this.props.refetchFriend(this.fetchFriend);
-	}
-	componentDidMount() {
 		window.addEventListener("resize", () => {
 			if (window.innerWidth < 970) {
 				this.setState({
 					isMobile: true,
 					isChatWrapperHidden: true,
-					friend: {}
+					friend: {},
+					chat: []
 				});
+				if (chatIO) chatIO.disconnect();
 			} else if (this.state.isChatWrapperHidden === true) {
 				this.setState({
 					isMobile: false,
@@ -95,8 +95,11 @@ class Home extends React.Component {
 							this.setState({ 
 								friends_fetched: true,
 								friends: response.body.friends,
-								friend: {}
+								friend: {},
+								chat_fetched: true,
+								chat: []
 							});
+							if (chatIO) chatIO.disconnect();
 						}
 					})
 				} else {
@@ -107,6 +110,7 @@ class Home extends React.Component {
 						chat_fetched: true,
 						chat: []
 					});
+					if (chatIO) chatIO.disconnect();
 				}
 			}
 		});
@@ -121,6 +125,7 @@ class Home extends React.Component {
 		.then((response) => response.json().then(body => ({ status: response.status, body: body })))
 		.then((response) => {
 			this.setState({
+				isChatWrapperHidden: false,
 				chat_fetched: true,
 				chat: response.body.chat
 			}, () => {
@@ -190,6 +195,10 @@ class Home extends React.Component {
 			this.fetchChat(friendID);
 		});
 	}
+	onMobileClickBack = () => {
+		this.setState({ isChatWrapperHidden: true, friend: {} });
+		if (chatIO) chatIO.disconnect();
+	}
 	render () {
 		if (!this.state.friends_fetched) {
 			return (
@@ -212,7 +221,7 @@ class Home extends React.Component {
 							/>
 						</div>
 						<div className="chat-wrapper" hidden={ this.state.isChatWrapperHidden }>
-							<div className="header"><button hidden={ !this.state.isMobile } onClick={ () => { this.setState({ isChatWrapperHidden: true, friend: {} }) } } ><i className="fas fa-angle-left"></i></button> { this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
+							<div className="header"><button hidden={ !this.state.isMobile } onClick={ this.onMobileClickBack } ><i className="fas fa-angle-left"></i></button> { this.state.friend.name }<span className="typing" hidden={ !this.state.typing }> is typing...</span></div>
 							<ChatList user={ this.props.user } friend={ this.state.friend } chat_fetched={ this.state.chat_fetched } chat={ this.state.chat } />
 							<div className="send-box">
 								<form onSubmit={ this.onSendMessage }>
