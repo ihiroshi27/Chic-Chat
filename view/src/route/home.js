@@ -35,6 +35,7 @@ class Home extends React.Component {
 						chat_fetched: false
 					}, () => {
 						this.fetchChat(friendID);
+						this.setListener(friendID);
 					});
 				}
 			})
@@ -138,9 +139,11 @@ class Home extends React.Component {
 	}
 	setListener = (friendID) => {
 		chatIO = io(IO_URL, { path: '/io/chat' });
-		chatIO.emit('info', {
-			userID: this.props.user.id,
-			friendID: friendID
+		chatIO.on('connect', () => {
+			chatIO.emit('info', {
+				userID: this.props.user.id,
+				friendID: friendID
+			});
 		});
 		chatIO.on('update', () => { this.fetchChat(friendID); });
 		chatIO.on('typing', (typing) => { this.setState({ typing: typing }); });
