@@ -74,7 +74,9 @@ class Home extends React.Component {
 				this.setState({
 					friends_fetched: true,
 					friends: [],
-					friend: {}
+					friend: {},
+					chat_fetched: true,
+					chat: []
 				});
 			} else {
 				let friendID = this.props.location.state ? this.props.location.state.friendID : false;
