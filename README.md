@@ -20,6 +20,4 @@ You need to configure a **MySQL, Nodemailer** and **reCAPTCHA v2**
 - `npm run build`
 
 ## Running
-- `npm start` at **root directory**
-
-**Back-end** will run on port **8080** and **Front-end** will run on port **3000**
+- `npm start`
