@@ -44,6 +44,7 @@ class Home extends React.Component {
 	componentDidMount() {
 		this.fetchFriend();
 		this.props.refetchFriend(this.fetchFriend);
+
 		window.addEventListener("resize", () => {
 			if (window.innerWidth < 970) {
 				this.setState({
@@ -82,8 +83,10 @@ class Home extends React.Component {
 			} else {
 				let friendID = this.props.location.state ? this.props.location.state.friendID : false;
 				if (friendID) {
+					let isFriendFound = false;
 					response.body.friends.forEach((friend) => {
 						if (friend.friend_id === friendID) {
+							isFriendFound = true;
 							this.setState({ 
 								friends_fetched: true,
 								friends: response.body.friends,
@@ -94,17 +97,18 @@ class Home extends React.Component {
 								this.fetchChat(friendID);
 								this.setListener(friendID);
 							});
-						} else {
-							this.setState({ 
-								friends_fetched: true,
-								friends: response.body.friends,
-								friend: {},
-								chat_fetched: true,
-								chat: []
-							});
-							if (chatIO) chatIO.disconnect();
 						}
-					})
+					});
+					if (!isFriendFound) {
+						this.setState({ 
+							friends_fetched: true,
+							friends: response.body.friends,
+							friend: {},
+							chat_fetched: true,
+							chat: []
+						});
+						if (chatIO) chatIO.disconnect();
+					}
 				} else {
 					this.setState({ 
 						friends_fetched: true,
