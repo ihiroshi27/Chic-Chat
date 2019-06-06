@@ -95,7 +95,7 @@
 		line-height: 1.2;
 	}
 	#friend-list > .friend > .friend-profile > .friend-profile-name {
-		width: 130px;
+		width: 120px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
