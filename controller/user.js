@@ -176,18 +176,21 @@ router.get('/search', function(req, res, next) {
 								'blocked',
 								[sequelize.col('friendship.blocked'), "being_blocked"]
 							],
-							where: { 
-								user_id: userID, 
-								friend_id: user.id 
-							},
 							include: [
 								{
 									attributes: [],
 									model: Friend,
 									as: 'friendship',
-									require: false
+									where: {
+										friend_id: userID
+									},
+									required: false
 								}
 							],
+							where: { 
+								user_id: userID,
+								friend_id: user.id
+							},
 							raw: true
 						});
 						if (friend) {

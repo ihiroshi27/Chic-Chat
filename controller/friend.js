@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
 						where: {
 							friend_id: payload.id
 						},
-						require: false
+						required: false
 					}
 				],
 				where: { 
